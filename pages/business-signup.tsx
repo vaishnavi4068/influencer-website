@@ -37,7 +37,6 @@ export default function BusinessSignupPage() {
               </div>
             </section>
 
-            {/* Right: form */}
             <section>
               <div className="rounded-3xl border border-gray-100 bg-emerald-50/50 p-5 md:p-6 lg:p-8">
                 <form className="space-y-5">
