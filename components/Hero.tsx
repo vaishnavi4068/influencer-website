@@ -1,6 +1,11 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 
 export default function Hero() {
+    const router = useRouter();
+    const handleCreateCampaignForInfluencer = () => {
+        router.push(`${process.env.NEXT_PUBLIC_INFLUENCER_SIGNUP_URL}/login?next=/campaigns/create`);
+    }
     return (
         <section className="relative text-white pt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
@@ -15,19 +20,27 @@ export default function Hero() {
                         Harness the power of AI to identify, connect, and collaborate with the right influencers
                         to amplify your brand and drive measurable results.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <Link
-                            href="/try-free"
+                    <div className="flex flex-col space-y-2 items-center">
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <Link
+                                href="/try-free"
+                                className="inline-block border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-colors text-lg"
+                            >
+                                Start Free Trial
+                            </Link>
+                            <Link
+                                href="/book-demo"
+                                className="inline-block border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-colors text-lg"
+                            >
+                                Watch Demo
+                            </Link>
+                        </div>
+                        <button
+                            onClick={handleCreateCampaignForInfluencer}
                             className="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors text-lg"
                         >
-                            Start Free Trial
-                        </Link>
-                        <Link
-                            href="/book-demo"
-                            className="inline-block border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-colors text-lg"
-                        >
-                            Watch Demo
-                        </Link>
+                            Create campaign for Influencer
+                        </button>
                     </div>
                 </div>
             </div>

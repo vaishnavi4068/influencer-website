@@ -7,20 +7,6 @@ export default function Header() {
         <div className="flex justify-between items-center py-4 px-6">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            {/* <div className="flex flex-col space-y-1">
-              <div className="flex space-x-1">
-                <div className="w-1 h-1 bg-teal-400 rounded-full"></div>
-                <div className="w-1 h-1 bg-yellow-400 rounded-full"></div>
-                <div className="w-1 h-1 bg-purple-400 rounded-full"></div>
-                <div className="w-1 h-1 bg-orange-400 rounded-full"></div>
-              </div>
-              <div className="flex space-x-1">
-                <div className="w-1 h-1 bg-teal-400 rounded-full"></div>
-                <div className="w-1 h-1 bg-yellow-400 rounded-full"></div>
-                <div className="w-1 h-1 bg-purple-400 rounded-full"></div>
-                <div className="w-1 h-1 bg-orange-400 rounded-full"></div>
-              </div>
-            </div> */}
             <Link href="/" className="text-xl font-bold text-gray-800">
               <span className="font-bold">Microdrive</span>
               <span className="font-normal text-gray-600">.Ai</span>
