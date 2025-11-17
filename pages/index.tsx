@@ -2,6 +2,9 @@ import Head from 'next/head'
 import Layout from '../components/Layout'
 import Hero from '../components/Hero'
 import BrandMarquee from '../components/BrandMarquee'
+import ProductShowcase from '../components/ProductShowcase'
+import CreatorSection from '../components/CreatorSection'
+import PricingSection from '../components/PricingSection'
 import Features from '../components/Features'
 import Footer from '../components/Footer'
 
@@ -9,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Microdrive.Ai</title>
+        <title>GrowRipple.Ai</title>
         <meta name="description" content="A modern influencer marketing platform built with AI" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -27,6 +30,9 @@ export default function Home() {
           <div className="relative z-10">
             <Hero />
             <BrandMarquee />
+            <ProductShowcase />
+            <CreatorSection />
+            <PricingSection />
             <Features />
             <Footer />
           </div>

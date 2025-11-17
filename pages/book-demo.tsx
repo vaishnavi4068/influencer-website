@@ -1,6 +1,8 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import { useState } from 'react'
 import Layout from '../components/Layout'
+import GrowRippleLogo from '../Images/GrowRipple_logo_with_bg-removebg-preview.png'
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, setHours, setMinutes } from 'date-fns'
 
 interface TimeSlot {
@@ -18,9 +20,14 @@ export default function BookDemoPage() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    firstName: '',
+    lastName: '',
+    workEmail: '',
+    phoneCountryCode: '+1',
+    phoneNumber: '',
     company: '',
+    businessType: '',
+    readiness: '',
     message: ''
   })
 
@@ -99,10 +106,17 @@ export default function BookDemoPage() {
       }
 
       const booking = {
-        name: formData.name,
-        email: formData.email,
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.workEmail,
+        workEmail: formData.workEmail,
+        phoneCountryCode: formData.phoneCountryCode,
+        phoneNumber: formData.phoneNumber,
         company: formData.company,
+        businessType: formData.businessType,
         message: formData.message,
+        readiness: formData.readiness,
         date: selectedDate.toISOString(),
         time: selectedTime,
         timezone
@@ -130,7 +144,17 @@ export default function BookDemoPage() {
 
       // Show success message
       setSubmitSuccess(true)
-      setFormData({ name: '', email: '', company: '', message: '' })
+      setFormData({
+        firstName: '',
+        lastName: '',
+        workEmail: '',
+        phoneCountryCode: '+1',
+        phoneNumber: '',
+        company: '',
+        businessType: '',
+        readiness: '',
+        message: ''
+      })
       setSelectedDate(null)
       setSelectedTime(null)
       setShowBookingForm(false)
@@ -163,65 +187,74 @@ export default function BookDemoPage() {
   return (
     <>
       <Head>
-        <title>Book a Demo • Microdrive.Ai</title>
+        <title>Book a Demo | GrowRipple</title>
       </Head>
       <Layout hideHeader>
-        <main className="min-h-screen bg-gradient-to-br from-purple-50 via-emerald-50 to-yellow-50">
+        <main className="min-h-screen bg-gradient-to-b from-[#e9fbff] via-white to-[#fff4e7]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
               {/* Left Section - Event Details */}
               <section className="order-2 lg:order-1">
-                <div className="sticky top-8 rounded-3xl border border-gray-100 p-6 md:p-8 bg-white/80 backdrop-blur">
-                  {/* Logo */}
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="flex gap-1">
-                      <div className="w-3 h-3 bg-teal-400 rounded"></div>
-                      <div className="w-3 h-3 bg-yellow-400 rounded"></div>
-                      <div className="w-3 h-3 bg-pink-400 rounded"></div>
-                      <div className="w-3 h-3 bg-green-400 rounded"></div>
+                <div className="sticky top-8 rounded-[40px] border border-[#68d9f4] p-6 md:p-8 bg-gradient-to-b from-[#b8eaff] via-white to-[#fff7ef] backdrop-blur shadow-[0_40px_90px_-45px_rgba(9,178,209,0.6)] relative overflow-hidden">
+                  <div className="absolute -top-16 right-4 h-56 w-56 rounded-full bg-[#5dcde4]/70 blur-[130px]" />
+                  <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#ffe4d0]/60 blur-[180px]" />
+                  <div className="relative">
+                    <div className="flex items-center justify-between mb-8">
+                      <Image
+                        src={GrowRippleLogo}
+                        alt="GrowRipple logo"
+                        width={240}
+                        height={90}
+                        className="h-16 w-auto drop-shadow"
+                      />
+                      <span className="text-xs font-semibold uppercase tracking-[0.4em] text-[#0aa5c8] bg-white/70 border border-white/60 px-4 py-1 rounded-full">
+                        Live demo
+                      </span>
                     </div>
-                    <span className="text-2xl font-bold text-gray-900">Microdrive.Ai</span>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-8">Microdrive.ai</p>
-
-                  {/* Event Title */}
-                  <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                    Demo / Intro Call
-                  </h1>
-
-                  {/* Duration */}
-                  <div className="flex items-center gap-2 text-gray-600 mb-6">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="font-medium">30 min</span>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-gray-700 mb-6 leading-relaxed">
-                    Transform your sales with AI-powered influencer marketing. Our all-in-one platform helps you find the perfect creators, automate campaigns, and measure results in real-time.
-                  </p>
-
-                  {/* Stats */}
-                  <ul className="space-y-3 mb-8">
-                    <li className="text-gray-700">• 400M+ influencers worldwide</li>
-                    <li className="text-gray-700">• 7+ major platforms supported</li>
-                  </ul>
-
-                  {/* Cookie Settings */}
-                  <div className="mt-auto pt-8">
-                    <a href="#" className="text-sm text-gray-500 hover:text-gray-700 underline">
-                      Cookie settings
-                    </a>
+                    <p className="text-sm font-semibold text-[#0aa5c8] uppercase tracking-[0.25em] mb-4">
+                      GrowRipple Platform Tour
+                    </p>
+                    <h1 className="text-4xl md:text-5xl font-black text-[#071d32] leading-tight">
+                      Launch AI-Matched Creator Campaigns
+                    </h1>
+                    <p className="text-[#556476] mt-4 leading-relaxed">
+                      Meet RippleMatch™, RippleBriefs™, and RipplePulse™ in a 30-minute working session. See how GrowRipple pairs you with authentic creators, spins up briefs, and surfaces performance in real time.
+                    </p>
+                    <div className="mt-8 grid grid-cols-2 gap-4 text-sm text-[#0a748a]">
+                      <div className="rounded-3xl bg-white/80 border border-[#c3f4ff] p-4">
+                        <p className="text-xs uppercase tracking-widest text-[#11b5c8]">Avg Response</p>
+                        <p className="text-2xl font-bold text-[#082941]">‹12 hrs</p>
+                      </div>
+                      <div className="rounded-3xl bg-white/80 border border-[#c3f4ff] p-4">
+                        <p className="text-xs uppercase tracking-widest text-[#11b5c8]">Time to launch</p>
+                        <p className="text-2xl font-bold text-[#082941]">7–10 days</p>
+                      </div>
+                    </div>
+                    <div className="mt-8 space-y-3">
+                      {[
+                        'AI-matched RippleMakers for your goal and market.',
+                        'AI-built briefs that feel on-brand—no back-and-forth.',
+                        'Campaign ops, contracts, payouts, and reporting in one orbit.'
+                      ].map((item) => (
+                        <div key={item} className="flex items-start gap-3 text-[#4f6179]">
+                          <span className="mt-1 h-2 w-2 rounded-full bg-[#00b9d9]" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-10 rounded-[32px] bg-gradient-to-r from-[#00b7ff] via-[#00c9d0] to-[#00d8a1] text-white px-6 py-5 shadow-lg">
+                      <p className="text-sm uppercase tracking-[0.4em] opacity-80">Session includes</p>
+                      <p className="text-base font-semibold mt-2">Custom walkthrough, campaign blueprint, and a recap deck within 24 hours.</p>
+                    </div>
                   </div>
                 </div>
               </section>
 
               {/* Right Section - Scheduling Interface */}
               <section className="order-1 lg:order-2">
-                <div className="bg-white/90 backdrop-blur border border-gray-100 rounded-3xl p-6 md:p-8 shadow">
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-                    Select a Date & Time
+                <div className="bg-white/95 backdrop-blur border border-[#12c8d5]/30 rounded-[32px] p-6 md:p-8 shadow-[0_30px_70px_-45px_rgba(0,166,201,0.6)]">
+                  <h2 className="text-2xl md:text-3xl font-bold text-[#071d32] mb-6">
+                    Select a Date &amp; Time
                   </h2>
 
                   {/* Calendar + Time Slots Side-by-Side */}
@@ -279,19 +312,19 @@ export default function BookDemoPage() {
                               onClick={() => handleDateClick(day)}
                               disabled={!isAvailable || !isCurrentMonth || isPastDate}
                               className={`
-                                aspect-square p-2 rounded-lg text-sm font-medium transition
-                                ${!isCurrentMonth ? 'text-gray-300 cursor-not-allowed' : ''}
-                                ${isSelected ? 'bg-purple-600 text-white' : ''}
+                                aspect-square p-2 rounded-xl text-sm font-semibold transition
+                                ${!isCurrentMonth ? 'text-slate-300 cursor-not-allowed' : ''}
+                                ${isSelected ? 'bg-gradient-to-r from-[#00b7ff] to-[#00d8a1] text-white shadow-lg border border-transparent' : ''}
                                 ${isAvailable && isCurrentMonth && !isSelected && !isPastDate
-                                  ? 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 cursor-pointer'
+                                  ? 'bg-white text-[#0b3f55] border border-[#c8f2ff] hover:bg-[#eafcff] cursor-pointer'
                                   : ''
                                 }
                                 ${(!isAvailable || isPastDate) && isCurrentMonth
-                                  ? 'text-gray-400 cursor-not-allowed hover:bg-gray-50'
+                                  ? 'text-slate-300 border border-slate-100 cursor-not-allowed'
                                   : ''
                                 }
                                 ${!isSelected && isCurrentMonth && isAvailable && !isPastDate
-                                  ? 'hover:ring-2 hover:ring-purple-300'
+                                  ? 'hover:ring-2 hover:ring-[#9aeff7]'
                                   : ''
                                 }
                               `}
@@ -305,7 +338,7 @@ export default function BookDemoPage() {
 
                     {/* Time Slots (right) */}
                     <div className="mt-6 md:mt-0">
-                      <p className="text-lg font-semibold text-gray-900 mb-4">
+                      <p className="text-lg font-semibold text-[#083451] mb-4">
                         {selectedDate ? format(selectedDate, 'EEEE, MMMM d') : 'Select a date'}
                       </p>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1">
@@ -315,10 +348,10 @@ export default function BookDemoPage() {
                               key={idx}
                               onClick={() => handleTimeClick(slot.time)}
                               className={`
-                                w-full px-3 py-2 rounded-lg text-center text-sm font-medium transition
+                                w-full px-3 py-2 rounded-xl text-center text-sm font-semibold transition
                                 ${selectedTime === slot.time
-                                  ? 'bg-purple-600 text-white'
-                                  : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'
+                                  ? 'bg-gradient-to-r from-[#00b7ff] to-[#00d8a1] text-white shadow border border-transparent'
+                                  : 'bg-white text-[#0b3f55] border border-[#c8f2ff] hover:bg-[#eafcff]'
                                 }
                               `}
                             >
@@ -341,7 +374,7 @@ export default function BookDemoPage() {
                       <select
                         value={timezone}
                         onChange={(e) => setTimezone(e.target.value)}
-                        className="flex-1 px-4 py-2 border border-purple-200 rounded-full bg-white hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                        className="flex-1 px-4 py-2 border border-[#c8f2ff] rounded-full bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd]"
                       >
                         <option value="Asia/Kolkata">India Standard Time ({getCurrentTime()})</option>
                         <option value="America/New_York">Eastern Time (ET)</option>
@@ -377,43 +410,125 @@ export default function BookDemoPage() {
                     <div className="mt-6 pt-6 border-t border-gray-200">
                       <h3 className="text-xl font-semibold text-gray-900 mb-4">Book Your Demo</h3>
                       <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              First Name *
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={formData.firstName}
+                              onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                              className="w-full px-4 py-2 border border-[#c8f2ff] rounded-full bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd]"
+                              placeholder="John"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Last Name *
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={formData.lastName}
+                              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                              className="w-full px-4 py-2 border border-[#c8f2ff] rounded-full bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd]"
+                              placeholder="Doe"
+                            />
+                          </div>
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Work Email *
+                            </label>
+                            <input
+                              type="email"
+                              required
+                              value={formData.workEmail}
+                              onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
+                              className="w-full px-4 py-2 border border-[#c8f2ff] rounded-full bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd]"
+                              placeholder="john@company.com"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Phone Number *
+                            </label>
+                            <div className="flex gap-2">
+                              <select
+                                value={formData.phoneCountryCode}
+                                onChange={(e) => setFormData({ ...formData, phoneCountryCode: e.target.value })}
+                                className="w-24 px-3 py-2 border border-[#c8f2ff] rounded-full bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd] text-xs"
+                              >
+                                <option value="+1">US +1</option>
+                                <option value="+44">UK +44</option>
+                                <option value="+91">India +91</option>
+                                <option value="+61">Australia +61</option>
+                                <option value="+65">Singapore +65</option>
+                                <option value="+971">UAE +971</option>
+                              </select>
+                              <input
+                                type="tel"
+                                required
+                                value={formData.phoneNumber}
+                                onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                                className="flex-1 min-w-0 px-4 py-2 border border-[#c8f2ff] rounded-full bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd]"
+                                placeholder="123 456 7890"
+                              />
+                            </div>
+                          </div>
+                        </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Full Name *
+                            What company do you represent? *
                           </label>
                           <input
                             type="text"
                             required
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            className="w-full px-4 py-2 border border-purple-200 rounded-full bg-white hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                            placeholder="John Doe"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Email *
-                          </label>
-                          <input
-                            type="email"
-                            required
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            className="w-full px-4 py-2 border border-purple-200 rounded-full bg-white hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                            placeholder="john@example.com"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Company
-                          </label>
-                          <input
-                            type="text"
                             value={formData.company}
                             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                            className="w-full px-4 py-2 border border-purple-200 rounded-full bg-white hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                            className="w-full px-4 py-2 border border-[#c8f2ff] rounded-full bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd]"
                             placeholder="Company Name"
                           />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            What type of business are you representing? *
+                          </label>
+                          <select
+                            required
+                            value={formData.businessType}
+                            onChange={(e) => setFormData({ ...formData, businessType: e.target.value })}
+                            className="w-full px-4 py-2 border border-[#c8f2ff] rounded-full bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd]"
+                          >
+                            <option value="">Select business type</option>
+                            <option value="Agency / Service Provider">Agency / Service Provider</option>
+                            <option value="Brand / Advertiser">Brand / Advertiser</option>
+                            <option value="Marketplace / Platform">Marketplace / Platform</option>
+                            <option value="Creator / Talent Manager">Creator / Talent Manager</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            How soon are you looking to get started? *
+                          </label>
+                          <select
+                            required
+                            value={formData.readiness}
+                            onChange={(e) => setFormData({ ...formData, readiness: e.target.value })}
+                            className="w-full px-4 py-2 border border-[#c8f2ff] rounded-full bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd]"
+                          >
+                            <option value="">Select timeline</option>
+                            <option value="Immediately">Immediately</option>
+                            <option value="Within 1 month">Within 1 month</option>
+                            <option value="1-3 months">1-3 months</option>
+                            <option value="3-6 months">3-6 months</option>
+                            <option value="6+ months">6+ months</option>
+                            <option value="Just exploring">Just exploring</option>
+                          </select>
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -423,14 +538,14 @@ export default function BookDemoPage() {
                             value={formData.message}
                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                             rows={3}
-                            className="w-full px-4 py-2 border border-purple-200 rounded-2xl bg-white hover:bg-purple-50 focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                            className="w-full px-4 py-2 border border-[#c8f2ff] rounded-2xl bg-white hover:bg-[#f0feff] focus:ring-2 focus:ring-[#00c3dd] focus:border-[#00c3dd]"
                             placeholder="Tell us about your needs..."
                           />
                         </div>
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full bg-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow"
+                          className="w-full bg-gradient-to-r from-[#00b7ff] to-[#00d8a1] text-white px-6 py-3 rounded-full font-semibold hover:opacity-95 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow"
                         >
                           {isSubmitting ? (
                             <>
@@ -451,8 +566,8 @@ export default function BookDemoPage() {
 
                 {/* Powered By Banner */}
                 <div className="mt-4 text-right">
-                  <p className="inline-block bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded transform -rotate-2">
-                    POWERED BY Microdrive.Ai
+                  <p className="inline-block bg-[#e4f9ff] text-[#0a6b84] text-xs px-3 py-1 rounded-full">
+                    POWERED BY GrowRipple
                   </p>
                 </div>
               </section>
@@ -463,4 +578,5 @@ export default function BookDemoPage() {
     </>
   )
 }
+
 

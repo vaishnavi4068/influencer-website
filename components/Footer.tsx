@@ -1,54 +1,148 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import GrowRippleLogo from '../Images/GrowRipple_logo_with_bg-removebg-preview.png'
+
+const sections = [
+  {
+    title: 'Platform',
+    links: [
+      { label: 'AI Creator Matching', href: '/#brands' },
+      { label: 'RippleBriefs™', href: '/#product' },
+      { label: 'RippleOrbit™ Workspaces', href: '/book-demo' },
+      { label: 'RipplePulse™ Analytics', href: '/#pricing' },
+      { label: 'RippleActivate™', href: '/#product' }
+    ]
+  },
+  {
+    title: 'Services',
+    links: [
+      { label: 'Managed Campaigns', href: '/book-demo' },
+      { label: 'Creator Sourcing', href: '/#creators' },
+      { label: 'Content Licensing', href: '/book-demo' },
+      { label: 'Retail Syndication', href: '/#product' }
+    ]
+  },
+  {
+    title: 'Solutions',
+    links: [
+      { label: 'Consumer Brands', href: '/#brands' },
+      { label: 'Retail & CPG', href: '/#product' },
+      { label: 'Agencies', href: '/#creators' },
+      { label: 'Marketplace Sellers', href: '/book-demo' }
+    ]
+  },
+  {
+    title: 'Resources',
+    links: [
+      { label: 'Blog', href: '/about' },
+      { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Terms of Service', href: '/terms' },
+      { label: 'Support', href: '/contact' }
+    ]
+  }
+]
+
+const socialIcons = [
+  {
+    label: 'X',
+    href: '#',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M4 4l16 16m0-16L4 20" strokeLinecap="round" />
+      </svg>
+    )
+  },
+  {
+    label: 'Facebook',
+    href: '#',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M15 4h-3a4 4 0 00-4 4v3H6v4h2v5h4v-5h3l1-4h-4V8a1 1 0 011-1h3z" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    )
+  },
+  {
+    label: 'LinkedIn',
+    href: '#',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M6 9h3v9H6zM6 5h.01M10.5 9H14a3 3 0 013 3v6h-3v-5.2c0-.88-.72-1.8-1.6-1.8H10.5z" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    )
+  },
+  {
+    label: 'YouTube',
+    href: '#',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+        <path d="M3 7.5a3 3 0 013-3h12a3 3 0 013 3v9a3 3 0 01-3 3H6a3 3 0 01-3-3z" />
+        <path d="M10 9l5 3-5 3z" fill="currentColor" />
+      </svg>
+    )
+  }
+]
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4">Microdrive</h3>
-            <p className="text-gray-400 mb-4">
-              A modern static website built with Next.js. Fast, responsive, and SEO-optimized.
+    <footer className="bg-[#1e1f27] text-white">
+      <div className="border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 grid grid-cols-1 lg:grid-cols-[1.5fr_repeat(4,1fr)] gap-10">
+          <div>
+            <Image
+              src={GrowRippleLogo}
+              alt="GrowRipple"
+              width={340}
+              height={120}
+              className="h-14 w-auto drop-shadow"
+              priority
+            />
+            <p className="mt-6 text-sm text-slate-300 max-w-xs leading-relaxed">
+              AI-orchestrated creator partnerships that keep your brand authentic, measurable, and fast to market.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white">
-                <span className="sr-only">Twitter</span>
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                </svg>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <span className="sr-only">GitHub</span>
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                </svg>
-              </a>
+          </div>
+          {sections.map((section) => (
+            <div key={section.title}>
+              <h4 className="text-base font-semibold mb-4">{section.title}</h4>
+              <ul className="space-y-2 text-sm text-slate-300">
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <Link href={link.href} className="hover:text-white transition">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li><Link href="/" className="text-gray-400 hover:text-white">Home</Link></li>
-              <li><Link href="/about" className="text-gray-400 hover:text-white">About</Link></li>
-              <li><Link href="/contact" className="text-gray-400 hover:text-white">Contact</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Resources</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white">Documentation</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white">Tutorials</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white">Support</a></li>
-            </ul>
+          ))}
+          <div className="space-y-4">
+            <h4 className="text-base font-semibold">Contact us today</h4>
+            <p className="text-sm text-slate-300">Interested in getting more from creator marketing?</p>
+            <form className="flex items-center gap-2 bg-white rounded-full p-1 shadow-inner">
+              <span className="pl-4 text-xs uppercase tracking-[0.35em] text-slate-500">●</span>
+              <input
+                type="email"
+                placeholder="Input your email"
+                className="flex-1 bg-transparent text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="rounded-full bg-gradient-to-r from-[#b86bff] to-[#5b68ff] text-sm font-semibold px-6 py-2 text-white shadow-lg"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
-
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400">
-            © 2024 Microdrive. All rights reserved.
-          </p>
+      </div>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
+        <p>© {new Date().getFullYear()} GrowRipple. All rights reserved.</p>
+        <div className="flex items-center gap-3 text-white">
+          {socialIcons.map((social) => (
+            <a key={social.label} href={social.href} aria-label={social.label} className="hover:text-[#8f9bff] transition">
+              <span className="sr-only">{social.label}</span>
+              <div className="h-5 w-5">{social.icon}</div>
+            </a>
+          ))}
         </div>
       </div>
     </footer>

@@ -1,12 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Resend } from 'resend'
+import FormData from 'form-data'
+import Mailgun from 'mailgun.js'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const mailgun = new Mailgun(FormData)
+const mg = mailgun.client({
+  username: 'api',
+  key: process.env.MAILGUN_API_KEY || '',
+})
 
 interface BookingRequest {
   name: string
+  firstName: string
+  lastName: string
   email: string
-  company?: string
+  workEmail: string
+  phoneCountryCode: string
+  phoneNumber: string
+  company: string
+  businessType: string
+  readiness: string
   message?: string
   date: string
   time: string
@@ -32,25 +44,35 @@ export default async function handler(
     const booking: BookingRequest = req.body
 
     // Validate required fields
-    if (!booking.name || !booking.email || !booking.date || !booking.time) {
+    if (!booking.firstName || !booking.lastName || !booking.workEmail || !booking.phoneNumber ||
+        !booking.company || !booking.businessType || !booking.readiness || !booking.date || !booking.time) {
       return res.status(400).json({
         success: false,
-        error: 'Missing required fields: name, email, date, and time are required'
+        error: 'Missing required fields. Please fill out all required fields.'
       })
     }
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(booking.email)) {
+    if (!emailRegex.test(booking.workEmail)) {
       return res.status(400).json({
         success: false,
         error: 'Invalid email format'
       })
     }
 
-    // Check if Resend API key is configured
-    if (!process.env.RESEND_API_KEY) {
-      console.error('RESEND_API_KEY is not configured')
+    // Check if Mailgun API key is configured
+    if (!process.env.MAILGUN_API_KEY) {
+      console.error('MAILGUN_API_KEY is not configured')
+      return res.status(500).json({
+        success: false,
+        error: 'Email service is not configured. Please contact support.'
+      })
+    }
+
+    // Check if Mailgun domain is configured
+    if (!process.env.MAILGUN_DOMAIN) {
+      console.error('MAILGUN_DOMAIN is not configured')
       return res.status(500).json({
         success: false,
         error: 'Email service is not configured. Please contact support.'
@@ -84,9 +106,9 @@ export default async function handler(
 
     // Send confirmation email to customer
     try {
-      await resend.emails.send({
-        from: process.env.FROM_EMAIL || 'onboarding@resend.dev',
-        to: booking.email,
+      await mg.messages.create(process.env.MAILGUN_DOMAIN || '', {
+        from: `GrowRipple.ai <noreply@${process.env.MAILGUN_DOMAIN}>`,
+        to: [booking.workEmail],
         subject: `Demo Booking Confirmed - ${formattedDate} at ${booking.time}`,
         html: `
           <!DOCTYPE html>
@@ -108,9 +130,9 @@ export default async function handler(
                   <h1>🎉 Demo Booking Confirmed!</h1>
                 </div>
                 <div class="content">
-                  <p>Hi ${booking.name},</p>
+                  <p>Hi ${booking.firstName},</p>
 
-                  <p>Your demo call with Microdrive.Ai has been confirmed!</p>
+                  <p>Your demo call with GrowRipple.ai has been confirmed!</p>
 
                   <div class="details">
                     <h3>📅 Meeting Details</h3>
@@ -129,10 +151,10 @@ export default async function handler(
 
                   <p>Looking forward to speaking with you!</p>
 
-                  <p>Best regards,<br>The Microdrive.Ai Team</p>
+                  <p>Best regards,<br>The GrowRipple.ai Team</p>
                 </div>
                 <div class="footer">
-                  <p>Microdrive.Ai - AI-Powered Influencer Marketing Platform</p>
+                  <p>GrowRipple.ai - AI-Powered Influencer Marketing Platform</p>
                   <p>This is an automated confirmation email.</p>
                 </div>
               </div>
@@ -149,36 +171,80 @@ export default async function handler(
     // Send notification email to admin
     if (process.env.ADMIN_EMAIL) {
       try {
-        await resend.emails.send({
-          from: process.env.FROM_EMAIL || 'onboarding@resend.dev',
-          to: process.env.ADMIN_EMAIL,
-          subject: `🔔 New Demo Booking: ${booking.name}`,
+        await mg.messages.create(process.env.MAILGUN_DOMAIN || '', {
+          from: `GrowRipple.ai <noreply@${process.env.MAILGUN_DOMAIN}>`,
+          to: [process.env.ADMIN_EMAIL],
+          subject: `🔔 New Demo Booking: ${booking.firstName} ${booking.lastName}`,
           html: `
             <!DOCTYPE html>
             <html>
-              <body style="font-family: Arial, sans-serif; line-height: 1.6;">
-                <h2>New Demo Booking Received</h2>
+              <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px;">
+                <div style="max-width: 600px; margin: 0 auto; background: #f9f9f9; padding: 30px; border-radius: 10px;">
+                  <h2 style="color: #667eea; border-bottom: 3px solid #667eea; padding-bottom: 10px;">📋 New Demo Booking Received</h2>
 
-                <h3>Customer Details:</h3>
-                <ul>
-                  <li><strong>Name:</strong> ${booking.name}</li>
-                  <li><strong>Email:</strong> ${booking.email}</li>
-                  ${booking.company ? `<li><strong>Company:</strong> ${booking.company}</li>` : ''}
-                </ul>
+                  <h3 style="color: #444; margin-top: 25px;">👤 Customer Details:</h3>
+                  <table style="width: 100%; background: white; padding: 15px; border-radius: 8px;">
+                    <tr>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>First Name:</strong></td>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.firstName}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Last Name:</strong></td>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.lastName}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Work Email:</strong></td>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;"><a href="mailto:${booking.workEmail}" style="color: #667eea;">${booking.workEmail}</a></td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Phone Number:</strong></td>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.phoneCountryCode} ${booking.phoneNumber}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Company:</strong></td>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.company}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Business Type:</strong></td>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.businessType}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px;"><strong>Readiness:</strong></td>
+                      <td style="padding: 8px;">${booking.readiness}</td>
+                    </tr>
+                  </table>
 
-                <h3>Meeting Details:</h3>
-                <ul>
-                  <li><strong>Date:</strong> ${formattedDate}</li>
-                  <li><strong>Time:</strong> ${booking.time}</li>
-                  <li><strong>Timezone:</strong> ${booking.timezone}</li>
-                </ul>
+                  <h3 style="color: #444; margin-top: 25px;">📅 Meeting Details:</h3>
+                  <table style="width: 100%; background: white; padding: 15px; border-radius: 8px;">
+                    <tr>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Date:</strong></td>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;">${formattedDate}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Time:</strong></td>
+                      <td style="padding: 8px; border-bottom: 1px solid #eee;">${booking.time}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px;"><strong>Timezone:</strong></td>
+                      <td style="padding: 8px;">${booking.timezone}</td>
+                    </tr>
+                  </table>
 
-                ${booking.message ? `
-                  <h3>Customer Message:</h3>
-                  <p style="background: #f5f5f5; padding: 15px; border-radius: 5px;">${booking.message}</p>
-                ` : ''}
+                  ${booking.message ? `
+                    <h3 style="color: #444; margin-top: 25px;">💬 Customer Message:</h3>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                      <p style="margin: 0;">${booking.message}</p>
+                    </div>
+                  ` : ''}
 
-                <p><a href="${meetLink}" style="display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px;">Join Meeting</a></p>
+                  <div style="text-align: center; margin-top: 30px;">
+                    <a href="${meetLink}" style="display: inline-block; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 25px; font-weight: bold;">Join Google Meet</a>
+                  </div>
+
+                  <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+                    <p style="color: #666; font-size: 12px; margin: 0;">GrowRipple.ai - AI-Powered Influencer Marketing Platform</p>
+                  </div>
+                </div>
               </body>
             </html>
           `,
