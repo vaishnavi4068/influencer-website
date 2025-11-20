@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import Layout from '../components/Layout'
-import GrowRippleLogo from '../Images/GrowRipple_logo_with_bg-removebg-preview.png'
+import GrowRippleLogo from '../Images/white-logo.png'
 
 export default function TryFreePage() {
   return (
@@ -10,7 +10,7 @@ export default function TryFreePage() {
       <Head>
         <title>Try for Free | GrowRipple</title>
       </Head>
-      <Layout hideHeader>
+      <Layout hideHeader={true}>
         <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#e7f9ff] via-white to-[#fff3ea]">
           <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14 lg:gap-16">
             {/* Left: collage/mock grid */}

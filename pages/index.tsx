@@ -29,8 +29,8 @@ export default function Home() {
           {/* Main content */}
           <div className="relative z-10">
             <Hero />
-            <BrandMarquee />
             <ProductShowcase />
+            <BrandMarquee />
             <CreatorSection />
             <PricingSection />
             <Features />

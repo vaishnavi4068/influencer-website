@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
 import Layout from '../components/Layout'
-import GrowRippleLogo from '../Images/GrowRipple_logo_with_bg-removebg-preview.png'
+import GrowRippleLogo from '../Images/white-logo.png'
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, setHours, setMinutes } from 'date-fns'
 
 interface TimeSlot {
@@ -189,17 +189,15 @@ export default function BookDemoPage() {
       <Head>
         <title>Book a Demo | GrowRipple</title>
       </Head>
-      <Layout hideHeader>
-        <main className="min-h-screen bg-gradient-to-b from-[#e9fbff] via-white to-[#fff4e7]">
+      <Layout hideHeader={true}>
+        <main className="min-h-screen bg-[#1ECAD3] text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
               {/* Left Section - Event Details */}
               <section className="order-2 lg:order-1">
-                <div className="sticky top-8 rounded-[40px] border border-[#68d9f4] p-6 md:p-8 bg-gradient-to-b from-[#b8eaff] via-white to-[#fff7ef] backdrop-blur shadow-[0_40px_90px_-45px_rgba(9,178,209,0.6)] relative overflow-hidden">
-                  <div className="absolute -top-16 right-4 h-56 w-56 rounded-full bg-[#5dcde4]/70 blur-[130px]" />
-                  <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#ffe4d0]/60 blur-[180px]" />
+                <div className="sticky top-8 rounded-[40px] border border-white/30 p-6 md:p-8 bg-white/10 backdrop-blur shadow-[0_40px_90px_-45px_rgba(0,0,0,0.35)] relative overflow-hidden">
                   <div className="relative">
-                    <div className="flex items-center justify-between mb-8">
+                    <div className="flex flex-col items-center text-center mb-8 space-y-4">
                       <Image
                         src={GrowRippleLogo}
                         alt="GrowRipple logo"
@@ -207,42 +205,29 @@ export default function BookDemoPage() {
                         height={90}
                         className="h-16 w-auto drop-shadow"
                       />
-                      <span className="text-xs font-semibold uppercase tracking-[0.4em] text-[#0aa5c8] bg-white/70 border border-white/60 px-4 py-1 rounded-full">
-                        Live demo
-                      </span>
+                      <p className="text-sm font-semibold text-white/80 uppercase tracking-[0.25em]">
+                        GrowRipple Platform Tour
+                      </p>
                     </div>
-                    <p className="text-sm font-semibold text-[#0aa5c8] uppercase tracking-[0.25em] mb-4">
-                      GrowRipple Platform Tour
-                    </p>
-                    <h1 className="text-4xl md:text-5xl font-black text-[#071d32] leading-tight">
+                    <h1 className="text-4xl md:text-5xl font-black text-white leading-tight">
                       Launch AI-Matched Creator Campaigns
                     </h1>
-                    <p className="text-[#556476] mt-4 leading-relaxed">
+                    <p className="text-white/85 mt-4 leading-relaxed">
                       Meet RippleMatch™, RippleBriefs™, and RipplePulse™ in a 30-minute working session. See how GrowRipple pairs you with authentic creators, spins up briefs, and surfaces performance in real time.
                     </p>
-                    <div className="mt-8 grid grid-cols-2 gap-4 text-sm text-[#0a748a]">
-                      <div className="rounded-3xl bg-white/80 border border-[#c3f4ff] p-4">
-                        <p className="text-xs uppercase tracking-widest text-[#11b5c8]">Avg Response</p>
-                        <p className="text-2xl font-bold text-[#082941]">‹12 hrs</p>
-                      </div>
-                      <div className="rounded-3xl bg-white/80 border border-[#c3f4ff] p-4">
-                        <p className="text-xs uppercase tracking-widest text-[#11b5c8]">Time to launch</p>
-                        <p className="text-2xl font-bold text-[#082941]">7–10 days</p>
-                      </div>
-                    </div>
                     <div className="mt-8 space-y-3">
                       {[
                         'AI-matched RippleMakers for your goal and market.',
                         'AI-built briefs that feel on-brand—no back-and-forth.',
                         'Campaign ops, contracts, payouts, and reporting in one orbit.'
                       ].map((item) => (
-                        <div key={item} className="flex items-start gap-3 text-[#4f6179]">
-                          <span className="mt-1 h-2 w-2 rounded-full bg-[#00b9d9]" />
+                        <div key={item} className="flex items-start gap-3 text-white/85">
+                          <span className="mt-1 h-2 w-2 rounded-full bg-[#FFD43B]" />
                           <span>{item}</span>
                         </div>
                       ))}
                     </div>
-                    <div className="mt-10 rounded-[32px] bg-gradient-to-r from-[#00b7ff] via-[#00c9d0] to-[#00d8a1] text-white px-6 py-5 shadow-lg">
+                    <div className="mt-10 rounded-[32px] bg-white/15 text-white px-6 py-5 shadow-lg">
                       <p className="text-sm uppercase tracking-[0.4em] opacity-80">Session includes</p>
                       <p className="text-base font-semibold mt-2">Custom walkthrough, campaign blueprint, and a recap deck within 24 hours.</p>
                     </div>
@@ -252,8 +237,8 @@ export default function BookDemoPage() {
 
               {/* Right Section - Scheduling Interface */}
               <section className="order-1 lg:order-2">
-                <div className="bg-white/95 backdrop-blur border border-[#12c8d5]/30 rounded-[32px] p-6 md:p-8 shadow-[0_30px_70px_-45px_rgba(0,166,201,0.6)]">
-                  <h2 className="text-2xl md:text-3xl font-bold text-[#071d32] mb-6">
+                <div className="bg-white/10 backdrop-blur border border-white/30 rounded-[32px] p-6 md:p-8 shadow-[0_30px_70px_-45px_rgba(0,0,0,0.45)] text-white">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-6">
                     Select a Date &amp; Time
                   </h2>
 
@@ -263,19 +248,19 @@ export default function BookDemoPage() {
                     <div className="flex items-center justify-between mb-4 md:col-span-2">
                       <button
                         onClick={prevMonth}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition"
+                        className="p-2 hover:bg-white/10 rounded-lg transition"
                         aria-label="Previous month"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
                       </button>
-                      <h3 className="text-lg font-semibold text-gray-900">
+                      <h3 className="text-lg font-semibold">
                         {format(currentMonth, 'MMMM yyyy')}
                       </h3>
                       <button
                         onClick={nextMonth}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition"
+                        className="p-2 hover:bg-white/10 rounded-lg transition"
                         aria-label="Next month"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -288,7 +273,7 @@ export default function BookDemoPage() {
                       {/* Week Days Header */}
                       <div className="grid grid-cols-7 gap-2 mb-2">
                         {weekDays.map((day) => (
-                          <div key={day} className="text-center text-xs font-semibold text-gray-600 py-2">
+                          <div key={day} className="text-center text-xs font-semibold text-white/70 py-2">
                             {day}
                           </div>
                         ))}
@@ -313,18 +298,18 @@ export default function BookDemoPage() {
                               disabled={!isAvailable || !isCurrentMonth || isPastDate}
                               className={`
                                 aspect-square p-2 rounded-xl text-sm font-semibold transition
-                                ${!isCurrentMonth ? 'text-slate-300 cursor-not-allowed' : ''}
-                                ${isSelected ? 'bg-gradient-to-r from-[#00b7ff] to-[#00d8a1] text-white shadow-lg border border-transparent' : ''}
+                                ${!isCurrentMonth ? 'text-white/30 border border-white/10 cursor-not-allowed' : ''}
+                                ${isSelected ? 'bg-white text-[#1ECAD3] shadow-lg border border-transparent' : ''}
                                 ${isAvailable && isCurrentMonth && !isSelected && !isPastDate
-                                  ? 'bg-white text-[#0b3f55] border border-[#c8f2ff] hover:bg-[#eafcff] cursor-pointer'
+                                  ? 'bg-white/15 text-white border border-white/20 hover:bg-white/20 cursor-pointer'
                                   : ''
                                 }
                                 ${(!isAvailable || isPastDate) && isCurrentMonth
-                                  ? 'text-slate-300 border border-slate-100 cursor-not-allowed'
+                                  ? 'text-white/30 border border-white/10 cursor-not-allowed'
                                   : ''
                                 }
                                 ${!isSelected && isCurrentMonth && isAvailable && !isPastDate
-                                  ? 'hover:ring-2 hover:ring-[#9aeff7]'
+                                  ? 'hover:ring-2 hover:ring-white/40'
                                   : ''
                                 }
                               `}
@@ -338,7 +323,7 @@ export default function BookDemoPage() {
 
                     {/* Time Slots (right) */}
                     <div className="mt-6 md:mt-0">
-                      <p className="text-lg font-semibold text-[#083451] mb-4">
+                      <p className="text-lg font-semibold text-white mb-4">
                         {selectedDate ? format(selectedDate, 'EEEE, MMMM d') : 'Select a date'}
                       </p>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1">
@@ -350,8 +335,8 @@ export default function BookDemoPage() {
                               className={`
                                 w-full px-3 py-2 rounded-xl text-center text-sm font-semibold transition
                                 ${selectedTime === slot.time
-                                  ? 'bg-gradient-to-r from-[#00b7ff] to-[#00d8a1] text-white shadow border border-transparent'
-                                  : 'bg-white text-[#0b3f55] border border-[#c8f2ff] hover:bg-[#eafcff]'
+                                  ? 'bg-white text-[#1ECAD3] shadow border border-transparent'
+                                  : 'bg-white/15 text-white border border-white/20 hover:bg-white/20'
                                 }
                               `}
                             >
@@ -359,7 +344,7 @@ export default function BookDemoPage() {
                             </button>
                           ))
                         ) : (
-                          <p className="text-gray-500 text-sm col-span-2 sm:col-span-3">Pick a date to see available times.</p>
+                          <p className="text-white/70 text-sm col-span-2 sm:col-span-3">Pick a date to see available times.</p>
                         )}
                       </div>
                     </div>
@@ -578,5 +563,9 @@ export default function BookDemoPage() {
     </>
   )
 }
+
+
+
+
 
 

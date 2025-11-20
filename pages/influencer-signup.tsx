@@ -8,7 +8,7 @@ export default function InfluencerSignupPage() {
       <Head>
         <title>Sign up • Influencers | Microdrive.Ai</title>
       </Head>
-      <Layout hideHeader>
+      <Layout hideHeader={true}>
         <main className="min-h-screen bg-white">
           <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
             {/* Left: Signup form */}

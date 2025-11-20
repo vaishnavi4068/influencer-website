@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router';
+import GrowRippleLogo from '../Images/white-logo.png'
 
 const ArrowIcon = () => (
     <svg
@@ -41,30 +43,43 @@ export default function Hero() {
     }
 
     return (
-        <section className="relative overflow-hidden bg-gradient-to-b from-[#e9fbff] via-[#faffff] to-[#fff4e7] text-slate-900 pt-32 pb-28">
+        <section className="relative overflow-hidden bg-[#1ECAD3] text-white pt-32 pb-28" style={{ fontFamily: "'Space Grotesk', 'Segoe UI', sans-serif" }}>
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute -top-32 -right-10 h-96 w-96 bg-[#7beef5]/30 rounded-full blur-[150px]" />
-                <div className="absolute -bottom-32 -left-16 h-[22rem] w-[22rem] bg-[#ffe8d1]/50 rounded-full blur-[190px]" />
+                <div className="absolute inset-x-0 top-12 flex justify-center gap-8">
+                    <span className="w-20 h-20 border-t-4 border-[#FFD43B] rounded-full" />
+                    <span className="w-20 h-20 border-t-4 border-[#FFD43B] rounded-full" />
+                </div>
+               
             </div>
             <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <p className="uppercase tracking-[0.35em] text-xs sm:text-sm text-[#12b5c9]">
+                <div className="flex justify-center mb-6">
+                    <Image
+                        src={GrowRippleLogo}
+                        alt="GrowRipple logo"
+                        width={520}
+                        height={280}
+                        className="h-50 w-auto drop-shadow"
+                        priority
+                    />
+                </div>
+                <div className="inline-flex items-center px-5 py-2 mb-4 rounded-full border border-white/40 bg-white/10 uppercase tracking-[0.35em] text-xs sm:text-sm text-white/80 font-semibold">
                     AI-Powered Creator Marketing
-                </p>
-                <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-tight font-black">
-                    <span className="block text-[#0a1b33] lg:whitespace-nowrap">
+                </div>
+                <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-tight font-black drop-shadow-[0_15px_30px_rgba(0,0,0,0.25)]">
+                    <span className="block lg:whitespace-nowrap text-white">
                         Where Every Creator
                     </span>
-                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#0082ff] via-[#00c7d9] to-[#00d1a5] lg:whitespace-nowrap">
+                    <span className="block lg:whitespace-nowrap text-white uppercase tracking-[0.05em]">
                         Partnership Starts a Ripple
                     </span>
                 </h1>
-                <p className="mt-8 text-xl md:text-2xl text-[#66758c] leading-relaxed max-w-3xl mx-auto">
-                    Find real creators. Run smarter campaigns. See results that matter--with AI at every step.
+                <p className="mt-8 text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto">
+                    Find real creators. Run smarter campaigns. See results that matter— with AI at every step.
                 </p>
                 <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-5">
                     <button
                         onClick={handleLaunchCampaign}
-                        className="group inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#00b7ff] via-[#00c9d0] to-[#00d8a1] px-10 py-4 text-lg font-semibold text-white shadow-[0_25px_50px_-25px_rgba(0,169,201,0.95)] transition-transform hover:translate-y-0.5"
+                        className="group inline-flex items-center justify-center gap-3 rounded-full bg-white text-[#1ECAD3] px-10 py-4 text-lg font-semibold shadow-[0_25px_50px_-25px_rgba(0,0,0,0.35)] transition-transform hover:-translate-y-0.5"
                     >
                         Launch Campaign
                         <span className="transition-transform group-hover:translate-x-1">
@@ -73,9 +88,11 @@ export default function Hero() {
                     </button>
                     <Link
                         href="/book-demo"
-                        className="inline-flex items-center gap-3 rounded-full border border-[#05c3cc] bg-white/80 px-10 py-4 text-lg font-semibold text-[#0a758a] shadow-[0_10px_30px_-20px_rgba(0,0,0,0.45)] transition hover:bg-white"
+                        className="inline-flex items-center gap-3 rounded-full bg-white text-[#1ECAD3] px-10 py-4 text-lg font-semibold shadow-[0_25px_50px_-25px_rgba(0,0,0,0.35)] transition-transform hover:-translate-y-0.5"
                     >
-                        <CalendarIcon />
+                        <span className="text-[#1ECAD3]">
+                            <CalendarIcon />
+                        </span>
                         Get in Touch
                     </Link>
                 </div>
