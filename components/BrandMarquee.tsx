@@ -1,67 +1,81 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import InstagramShowcase from '../Images/instagram.jpg'
+
+const brandBenefits = [
+  'Right creators, fast – RippleMatch ranks local/nano/micro creators by fit.',
+  'Briefs in minutes – RippleBriefs turns goals into clear instructions.',
+  'Calm campaign ops – RippleOrbit manages content, approvals, and payouts.',
+  'See what works – RipplePulse shows live KPIs, benchmarks, and reports.',
+  'Activate everywhere – RippleActivate pushes content to Meta, TikTok, and more.'
+]
+
 export default function BrandMarquee() {
-    const brands = [
-        'ESTRID',
-        'PRETTYLITTLETHING',
-        'SAMSUNG',
-        'catrice COSMETICS',
-        'boohooMAN',
-        'Budweiser',
-        'Lufthansa',
-        'NIKE',
-        'ADIDAS',
-        'COCA-COLA',
-        'APPLE',
-        'MICROSOFT'
-    ]
+  return (
+    <section id="brands" className="relative overflow-hidden py-16 bg-[#1ECAD3] text-white">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-x-0 top-10 flex justify-center gap-8">
+          <span className="w-16 mb-4 h-16 border-t-4 border-[#FFD43B] rounded-full" />
+          <span className="w-16 mb-4  h-16 border-t-4 border-[#FFD43B] rounded-full" />
+        </div>
+      </div>
 
-    return (
-        <section className="py-16 bg-white relative overflow-hidden">
-            {/* Background with blurred shapes */}
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-50 to-orange-50">
-                <div className="absolute top-0 left-0 w-32 h-32 bg-amber-200 rounded-full blur-3xl opacity-30"></div>
-                <div className="absolute bottom-0 right-0 w-40 h-40 bg-orange-200 rounded-full blur-3xl opacity-30"></div>
-                <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-yellow-200 rounded-full blur-2xl opacity-20"></div>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center px-5 py-2 mb-4 mt-6 rounded-full border border-white/40 bg-white/10 uppercase tracking-[0.35em] text-xs text-white/70 font-semibold">
+            Trusted Partners
+          </div>
+          <h2 className="mt-6 text-3xl md:text-4xl font-black">Brands Creating Ripples with Us</h2>
+          <p className="mt-3 text-base sm:text-lg text-white/80">
+            Global leaders tap GrowRipple to run AI-powered creator programs end to end.
+          </p>
+        </div>
+
+        <div className="rounded-[32px] bg-white/10 backdrop-blur border border-white/30 shadow-[0_35px_80px_-50px_rgba(0,0,0,0.35)] px-6 sm:px-8 py-8">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-stretch">
+            <div className="space-y-5">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em]">
+                <span className="h-2 w-2 rounded-full bg-[#FFD43B]" />
+                Brands
+              </div>
+              <h3 className="text-2xl md:text-3xl font-black leading-tight">Launch AI-Matched Creator Campaigns</h3>
+              <p className="text-sm sm:text-base text-white/80 leading-relaxed">
+                Find authentic, community-rooted RippleMakers and go live in days, not weeks.
+                GrowRipple handles matching, briefs, ops, and measurement so every partnership stays on-brand.
+              </p>
+              <div>
+                <h4 className="text-lg font-semibold">Why brands choose GrowRipple</h4>
+                <ul className="mt-4 grid sm:grid-cols-2 gap-3 text-sm text-white/90">
+                  {brandBenefits.map((benefit) => (
+                    <li key={benefit} className="flex items-start gap-2">
+                      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[#FFD43B]" aria-hidden="true" />
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/coming-soon"
+                  className="inline-flex flex-1 min-w-[160px] items-center justify-center rounded-full bg-white text-[#1ECAD3] px-8 py-3 text-sm font-semibold shadow-[0_25px_50px_-30px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 transition-transform"
+                >
+                  Sign Up
+                </Link>
+                <a
+                  href="/book-demo"
+                  className="inline-flex flex-1 min-w-[160px] items-center justify-center rounded-full border border-white/60 text-white px-8 py-3 text-sm font-semibold hover:bg-white/10 transition"
+                >
+                  Get in Touch
+                </a>
+              </div>
             </div>
 
-            <div className="relative z-10">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                        Meet Influencer Marketing AI
-                    </h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Trusted by leading brands worldwide
-                    </p>
-                </div>
-
-                {/* Marquee Container */}
-                <div className="relative">
-                    <div className="flex overflow-hidden">
-                        {/* First set of brands */}
-                        <div className="flex animate-marquee whitespace-nowrap">
-                            {brands.map((brand, index) => (
-                                <div
-                                    key={`first-${index}`}
-                                    className="flex items-center mx-8 text-2xl font-bold text-gray-700 hover:text-gray-900 transition-colors"
-                                >
-                                    {brand}
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Second set of brands for seamless loop */}
-                        <div className="flex animate-marquee whitespace-nowrap">
-                            {brands.map((brand, index) => (
-                                <div
-                                    key={`second-${index}`}
-                                    className="flex items-center mx-8 text-2xl font-bold text-gray-700 hover:text-gray-900 transition-colors"
-                                >
-                                    {brand}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+            <div className="rounded-[24px] overflow-hidden border border-white/30 shadow-[0_30px_60px_-45px_rgba(0,0,0,0.35)] h-full min-h-[260px] lg:min-h-[360px] flex">
+              <Image src={InstagramShowcase} alt="Creator collaboration" className="w-full h-full object-cover" priority />
             </div>
-        </section>
-    )
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }

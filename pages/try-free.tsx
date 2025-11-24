@@ -1,79 +1,99 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import Layout from '../components/Layout'
+import GrowRippleLogo from '../Images/white-logo.png'
+
+const splitSections = [
+  {
+    id: 'creator',
+    label: 'Creator Access',
+    headline: 'Where everyday creators grow &mdash; one ripple at a time',
+    description:
+      'Join a community of authentic creators discovering AI-matched brand campaigns built for their voice, style, and audience. Create content you love, earn rewards, and grow your influence with tools that simplify everything.',
+    prompt: 'Ready to start making ripples?'
+  },
+  {
+    id: 'brand',
+    label: 'Brand Access',
+    headline: 'Where every brand partnership starts a ripple',
+    description:
+      "Tap into a community of authentic creators matched to your goals, audience, and market &mdash; powered by GrowRipple's AI. Launch real, local creator campaigns, scale what works, and grow your brand with tools that make creator marketing simple.",
+    prompt: 'Ready to start growing with creators?'
+  }
+]
 
 export default function TryFreePage() {
   return (
     <>
       <Head>
-        <title>Try for Free • Microdrive.Ai</title>
+        <title>Try for Free | GrowRipple</title>
       </Head>
-      <Layout hideHeader>
-        <main className="min-h-screen flex items-center justify-center bg-white">
-          <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14 lg:gap-16">
-            {/* Left: collage/mock grid */}
-            <section className="order-2 lg:order-1">
-              <div className="rounded-3xl border border-gray-100 p-4 md:p-6 bg-gradient-to-br from-purple-50 via-emerald-50 to-yellow-50">
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 md:gap-4">
-                  {Array.from({ length: 12 }).map((_, idx) => (
-                    <div
-                      key={idx}
-                      className="h-28 sm:h-32 md:h-36 rounded-2xl bg-white overflow-hidden ring-1 ring-black/5 flex items-center justify-center"
-                    >
-                      <div className="w-full h-full bg-gradient-to-br from-purple-200/60 via-yellow-200/60 to-emerald-200/60" />
+      <Layout hideHeader={true}>
+        <main className="min-h-screen bg-[#1ECAD3] text-[#0f1f32] flex items-center">
+          <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+            <div className="flex justify-center">
+              <Image
+                src={GrowRippleLogo}
+                alt="GrowRipple logo"
+                width={200}
+                height={80}
+                className="h-16 w-auto drop-shadow"
+                priority
+              />
+            </div>
+            <div className="flex justify-between items-center">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 rounded-full border border-[#0f1f32]/15 bg-white/70 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#0f1f32]/80 hover:bg-white transition"
+              >
+                Back
+              </Link>
+              <span className="hidden sm:inline-flex items-center rounded-full border border-[#0f1f32]/10 bg-white px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#0f1f32]/60">
+                GrowRipple Access
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
+              {splitSections.map(section => (
+                <section
+                  key={section.id}
+                  className="relative rounded-[36px] overflow-hidden border border-[#0f1f32]/10 shadow-[0_45px_120px_-60px_rgba(15,31,50,0.35)] min-h-[460px] flex bg-[#f1f8ff]"
+                >
+                  <div className="relative z-10 flex flex-col justify-center items-center text-center gap-5 p-10 w-full">
+                    <div className="inline-flex items-center rounded-full border border-[#0f1f32]/15 bg-white/70 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-[#0f1f32]/70">
+                      {section.label}
                     </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* Right: copy and actions */}
-            <section className="order-1 lg:order-2 flex items-center">
-              <div className="w-full">
-                <h1 className="text-[30px] md:text-[42px] leading-tight font-serif text-gray-900">
-                  Home of the everyday creator
-                </h1>
-                <p className="mt-4 text-gray-600 max-w-xl">
-                  Discover your next favorite brands, create content, and earn perks — grow with a
-                  community of thousands of creators.
-                </p>
-
-                <div className="mt-10">
-                  <div className="text-xs tracking-widest text-gray-500 font-semibold">GET STARTED</div>
-                  <div className="mt-4 space-y-3 max-w-sm">
-                    <a
-                      href="https://influencer-dev.microdrivedrillo.com/login/?next=/home/"
-                      className="w-full inline-flex items-center justify-center rounded-full border-2 border-gray-200 px-6 py-3 text-gray-900 font-semibold hover:bg-purple-600 hover:text-white active:bg-purple-700 transition"
-                    >
-                      I'm an Influencer
-                    </a>
-                    <a
-                      href="https://clientfrontend-dev.microdrivedrillo.com/login"
-                      className="w-full inline-flex items-center justify-center rounded-full border-2 border-gray-200 px-6 py-3 text-gray-900 font-semibold hover:bg-purple-600 hover:text-white active:bg-purple-700 transition"
-                    >
-                      I'm with a Business
-                    </a>
+                    <h2
+                      className="text-[26px] md:text-[34px] font-black leading-snug"
+                      dangerouslySetInnerHTML={{ __html: section.headline }}
+                    />
+                    <p
+                      className="text-base md:text-lg text-[#26394d] leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: section.description }}
+                    />
+                    <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#0f1f32]/70">{section.prompt}</p>
+                    <div className="mt-4 flex flex-col sm:flex-row gap-4">
+                      <Link
+                        href="/coming-soon"
+                        className="inline-flex items-center justify-center rounded-full bg-[#0f1f32] text-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.35em] shadow-[0_25px_60px_-30px_rgba(15,31,50,0.65)] hover:-translate-y-0.5 transition"
+                      >
+                        Sign Up
+                      </Link>
+                      <Link
+                        href="/coming-soon"
+                        className="inline-flex items-center justify-center rounded-full border border-[#0f1f32] px-8 py-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#0f1f32] hover:bg-[#0f1f32]/5 transition"
+                      >
+                        Sign In
+                      </Link>
+                    </div>
                   </div>
-                </div>
-
-                <div className="mt-12">
-                  <div className="text-xs tracking-widest text-gray-500 font-semibold">RETURNING USERS</div>
-                  <div className="mt-4">
-                    <Link
-                      href="#"
-                      className="inline-flex items-center text-purple-700 hover:text-purple-800 font-semibold underline underline-offset-4"
-                    >
-                      Sign in to your account
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </section>
+                </section>
+              ))}
+            </div>
           </div>
         </main>
       </Layout>
     </>
   )
 }
-
-

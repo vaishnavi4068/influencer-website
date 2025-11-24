@@ -1,3 +1,6 @@
+// Feature section temporarily disabled per request.
+// Keeping original implementation below for easy restoration.
+/*
 import DiscoverCard from './DiscoverCard'
 
 export default function Features() {
@@ -15,12 +18,12 @@ export default function Features() {
         {
             title: 'SEO Optimized',
             description: 'Static generation ensures fast loading and great SEO performance.',
-            icon: '🔍'
+            icon: '🚀'
         },
         {
             title: 'Easy to Deploy',
             description: 'Export as static files and deploy anywhere with ease.',
-            icon: '🚀'
+            icon: '☁️'
         }
     ]
 
@@ -53,8 +56,11 @@ export default function Features() {
                 </div>
             </section>
 
-            {/* Discover Influencers Card */}
             <DiscoverCard />
         </>
     )
 }
+*/
+
+const Features = () => null
+export default Features
