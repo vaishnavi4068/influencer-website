@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const plans = ['RippleStart', 'RippleGrow', 'RipplePro', 'RippleElite']
 
 const rows = [
@@ -78,12 +80,12 @@ export default function PricingSection() {
                 </ul>
               </div>
               <div className="px-6 pb-6">
-                <a
+                <Link
                   href="/book-demo"
                   className="block text-center rounded-full px-5 py-3 font-semibold text-[#031524] shadow-[0_25px_60px_-25px_rgba(0,0,0,0.6)] bg-white"
                 >
                   Get in Touch
-                </a>
+                </Link>
               </div>
             </div>
           ))}

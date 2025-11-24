@@ -73,7 +73,7 @@ export default function CreatorSection() {
 
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           <div className="rounded-[32px] border border-white/30 bg-[#f1f8ff] text-[#0f1f32] p-8">
-            <h3 className="text-xl font-semibold">Who it's for</h3>
+            <h3 className="text-xl font-semibold">Who it&apos;s for</h3>
             <ul className="mt-4 space-y-3 text-[#0f1f32]/85">
               {whoFor.map((item) => (
                 <li key={item} className="flex items-start gap-3">

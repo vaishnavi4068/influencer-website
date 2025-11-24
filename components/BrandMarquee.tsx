@@ -61,12 +61,12 @@ export default function BrandMarquee() {
                 >
                   Sign Up
                 </Link>
-                <a
+                <Link
                   href="/book-demo"
                   className="inline-flex flex-1 min-w-[160px] items-center justify-center rounded-full border border-white/60 text-white px-8 py-3 text-sm font-semibold hover:bg-white/10 transition"
                 >
                   Get in Touch
-                </a>
+                </Link>
               </div>
             </div>
 

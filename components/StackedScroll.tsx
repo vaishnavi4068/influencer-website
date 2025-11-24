@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 
 export type CardDef = {
   key: string;
@@ -177,12 +178,12 @@ function Card({ card }: { card: CardDef }) {
           </ul>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <a href="/try-free" className="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors text-center">
+            <Link href="/try-free" className="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors text-center">
               TRY FOR FREE
-            </a>
-            <a href="/book-demo" className="inline-block border-2 border-purple-600 text-purple-600 px-8 py-4 rounded-lg font-semibold hover:bg-purple-50 transition-colors text-center">
+            </Link>
+            <Link href="/book-demo" className="inline-block border-2 border-purple-600 text-purple-600 px-8 py-4 rounded-lg font-semibold hover:bg-purple-50 transition-colors text-center">
               BOOK A DEMO
-            </a>
+            </Link>
           </div>
         </div>
       </div>
