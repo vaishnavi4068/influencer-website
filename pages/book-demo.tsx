@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import Layout from '../components/Layout'
@@ -192,6 +193,14 @@ export default function BookDemoPage() {
       <Layout hideHeader={true}>
         <main className="min-h-screen bg-[#1ECAD3] text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            <div className="flex justify-start mb-6">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white hover:bg-white/30 transition"
+              >
+                ← Back
+              </Link>
+            </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
               {/* Left Section - Event Details */}
               <section className="order-2 lg:order-1">
@@ -223,32 +232,32 @@ export default function BookDemoPage() {
                       ].map((item) => (
                         <div key={item} className="flex items-start gap-3 text-white/85">
                           <span className="mt-1 h-2 w-2 rounded-full bg-[#FFD43B]" />
-                          <span>{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="mt-10 rounded-[32px] bg-white/15 text-white px-6 py-5 shadow-lg">
-                      <p className="text-sm uppercase tracking-[0.4em] opacity-80">Session includes</p>
-                      <p className="text-base font-semibold mt-2">Custom walkthrough, campaign blueprint, and a recap deck within 24 hours.</p>
-                    </div>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-10 rounded-[32px] bg-white/15 text-white px-6 py-5 shadow-lg">
+                    <p className="text-sm uppercase tracking-[0.4em] opacity-80">Session includes</p>
+                    <p className="text-base font-semibold mt-2">Custom walkthrough, campaign blueprint, and a recap deck within 24 hours.</p>
                   </div>
                 </div>
-              </section>
+              </div>
+            </section>
 
               {/* Right Section - Scheduling Interface */}
-              <section className="order-1 lg:order-2">
-                <div className="bg-white/10 backdrop-blur border border-white/30 rounded-[32px] p-6 md:p-8 shadow-[0_30px_70px_-45px_rgba(0,0,0,0.45)] text-white">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-6">
-                    Select a Date &amp; Time
+              <section className="order-1 lg:order-2 text-[#0f1f32]">
+                <div className="bg-white border border-white/30 rounded-[32px] p-6 md:p-8 shadow-[0_30px_70px_-45px_rgba(0,0,0,0.25)]">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-6 text-[#041529]">
+                        Select a Date &amp; Time
                   </h2>
 
                   {/* Calendar + Time Slots Side-by-Side */}
                   <div className="mb-6 md:grid md:grid-cols-2 md:gap-6">
                     {/* Month Navigation (spans both on mobile, left on desktop) */}
-                    <div className="flex items-center justify-between mb-4 md:col-span-2">
+                    <div className="flex items-center justify-between mb-4 md:col-span-2 text-[#041529]">
                       <button
                         onClick={prevMonth}
-                        className="p-2 hover:bg-white/10 rounded-lg transition"
+                        className="p-2 rounded-lg border border-slate-200 text-slate-600 hover:border-[#1ECAD3] transition"
                         aria-label="Previous month"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -260,7 +269,7 @@ export default function BookDemoPage() {
                       </h3>
                       <button
                         onClick={nextMonth}
-                        className="p-2 hover:bg-white/10 rounded-lg transition"
+                        className="p-2 rounded-lg border border-slate-200 text-slate-600 hover:border-[#1ECAD3] transition"
                         aria-label="Next month"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -273,7 +282,7 @@ export default function BookDemoPage() {
                       {/* Week Days Header */}
                       <div className="grid grid-cols-7 gap-2 mb-2">
                         {weekDays.map((day) => (
-                          <div key={day} className="text-center text-xs font-semibold text-white/70 py-2">
+                          <div key={day} className="text-center text-xs font-semibold text-[#657188] py-2">
                             {day}
                           </div>
                         ))}
@@ -297,19 +306,19 @@ export default function BookDemoPage() {
                               onClick={() => handleDateClick(day)}
                               disabled={!isAvailable || !isCurrentMonth || isPastDate}
                               className={`
-                                aspect-square p-2 rounded-xl text-sm font-semibold transition
-                                ${!isCurrentMonth ? 'text-white/30 border border-white/10 cursor-not-allowed' : ''}
-                                ${isSelected ? 'bg-white text-[#1ECAD3] shadow-lg border border-transparent' : ''}
+                                aspect-square p-2 rounded-xl text-sm font-semibold transition border
+                                ${!isCurrentMonth ? 'text-slate-300 border-slate-200 cursor-not-allowed' : 'border-transparent'}
+                                ${isSelected ? 'bg-[#1ECAD3] text-white shadow-lg' : ''}
                                 ${isAvailable && isCurrentMonth && !isSelected && !isPastDate
-                                  ? 'bg-white/15 text-white border border-white/20 hover:bg-white/20 cursor-pointer'
+                                  ? 'bg-white text-[#0f1f32] border-slate-200 hover:border-[#1ECAD3] cursor-pointer'
                                   : ''
                                 }
                                 ${(!isAvailable || isPastDate) && isCurrentMonth
-                                  ? 'text-white/30 border border-white/10 cursor-not-allowed'
+                                  ? 'text-slate-300 border-slate-200 cursor-not-allowed'
                                   : ''
                                 }
                                 ${!isSelected && isCurrentMonth && isAvailable && !isPastDate
-                                  ? 'hover:ring-2 hover:ring-white/40'
+                                  ? 'hover:ring-2 hover:ring-[#1ECAD3]/40'
                                   : ''
                                 }
                               `}
@@ -323,10 +332,10 @@ export default function BookDemoPage() {
 
                     {/* Time Slots (right) */}
                     <div className="mt-6 md:mt-0">
-                      <p className="text-lg font-semibold text-white mb-4">
+                      <p className="text-lg font-semibold text-[#041529] mb-4">
                         {selectedDate ? format(selectedDate, 'EEEE, MMMM d') : 'Select a date'}
                       </p>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1">
                         {selectedDate ? (
                           timeSlots.map((slot, idx) => (
                             <button
@@ -335,8 +344,8 @@ export default function BookDemoPage() {
                               className={`
                                 w-full px-3 py-2 rounded-xl text-center text-sm font-semibold transition
                                 ${selectedTime === slot.time
-                                  ? 'bg-white text-[#1ECAD3] shadow border border-transparent'
-                                  : 'bg-white/15 text-white border border-white/20 hover:bg-white/20'
+                                  ? 'bg-[#1ECAD3] text-white shadow border border-transparent'
+                                  : 'bg-white text-[#0f1f32] border border-slate-200 hover:border-[#1ECAD3]'
                                 }
                               `}
                             >
@@ -344,7 +353,7 @@ export default function BookDemoPage() {
                             </button>
                           ))
                         ) : (
-                          <p className="text-white/70 text-sm col-span-2 sm:col-span-3">Pick a date to see available times.</p>
+                          <p className="text-[#5f6b7a] text-sm col-span-2 sm:col-span-3">Pick a date to see available times.</p>
                         )}
                       </div>
                     </div>

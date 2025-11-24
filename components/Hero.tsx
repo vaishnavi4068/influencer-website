@@ -39,7 +39,7 @@ export default function Hero() {
     const router = useRouter();
 
     const handleLaunchCampaign = () => {
-        router.push(`${process.env.NEXT_PUBLIC_INFLUENCER_SIGNUP_URL}/login?next=/campaigns/create`);
+        router.push('/coming-soon');
     }
 
     return (
@@ -51,25 +51,25 @@ export default function Hero() {
                 </div>
                
             </div>
-            <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <div className="flex justify-center mb-6">
                     <Image
                         src={GrowRippleLogo}
                         alt="GrowRipple logo"
-                        width={520}
-                        height={280}
-                        className="h-50 w-auto drop-shadow"
+                        width={320}
+                        height={160}
+                        className="h-32 w-auto drop-shadow"
                         priority
                     />
                 </div>
-                <div className="inline-flex items-center px-5 py-2 mb-4 rounded-full border border-white/40 bg-white/10 uppercase tracking-[0.35em] text-xs sm:text-sm text-white/80 font-semibold">
+                <div className="inline-flex items-center px-5 py-2 mb-4 mt-8 rounded-full border border-white/40 bg-white/10 uppercase tracking-[0.35em] text-xs sm:text-sm text-white/80 font-semibold">
                     AI-Powered Creator Marketing
                 </div>
                 <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-tight font-black drop-shadow-[0_15px_30px_rgba(0,0,0,0.25)]">
                     <span className="block lg:whitespace-nowrap text-white">
                         Where Every Creator
                     </span>
-                    <span className="block lg:whitespace-nowrap text-white uppercase tracking-[0.05em]">
+                    <span className="block lg:whitespace-nowrap text-white tracking-[0.05em]">
                         Partnership Starts a Ripple
                     </span>
                 </h1>
