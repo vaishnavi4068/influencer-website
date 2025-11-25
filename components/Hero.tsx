@@ -39,7 +39,8 @@ export default function Hero() {
     const router = useRouter();
 
     const handleLaunchCampaign = () => {
-        router.push('/coming-soon');
+        router.push(`${process.env.NEXT_PUBLIC_INFLUENCER_SIGNUP_URL}/login?next=/campaigns/create`);
+        // router.push('/coming-soon');
     }
 
     return (
