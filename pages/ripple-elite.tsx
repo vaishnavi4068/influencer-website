@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Layout from '../components/Layout'
 import CTAButtons from '../components/CTAButtons'
-import ManagerImage from '../Images/manager.jpg'
+import ManagerImage from '../Images/manager.webp'
 
 const highlights = [
   'Signature strategy – Offers, messaging, and a campaign playbook tailored to your market.',

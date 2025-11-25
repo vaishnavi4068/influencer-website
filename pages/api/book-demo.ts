@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import FormData from 'form-data'
 import Mailgun from 'mailgun.js'
+import { createCalendarEvent } from '../../lib/google-calendar'
 
 const mailgun = new Mailgun(FormData)
 const mg = mailgun.client({
@@ -90,10 +91,6 @@ export default async function handler(
       message: booking.message
     })
 
-    // Generate a placeholder Meet link
-    // TODO: Replace with actual Google Calendar API integration
-    const meetLink = `https://meet.google.com/${generateMeetCode()}`
-
     // Format the date nicely
     const bookingDate = new Date(booking.date)
     const formattedDate = bookingDate.toLocaleDateString('en-US', {
@@ -103,6 +100,41 @@ export default async function handler(
       day: 'numeric',
       timeZone: booking.timezone
     })
+
+    // Parse the selected time and create start/end times
+    const [timeStr, period] = booking.time.toLowerCase().split(/(?=[ap]m)/)
+    const [hours, minutes] = timeStr.split(':').map(s => parseInt(s.trim()))
+    let hour24 = hours
+    if (period === 'pm' && hours !== 12) hour24 += 12
+    if (period === 'am' && hours === 12) hour24 = 0
+
+    const startTime = new Date(booking.date)
+    startTime.setHours(hour24, minutes || 0, 0, 0)
+
+    // Default to 30-minute meeting
+    const endTime = new Date(startTime)
+    endTime.setMinutes(endTime.getMinutes() + 30)
+
+    // Create Google Calendar event with Google Meet link
+    const calendarResult = await createCalendarEvent({
+      summary: `GrowRipple Demo - ${booking.firstName} ${booking.lastName}`,
+      description: `Demo booking for ${booking.company}\n\nBusiness Type: ${booking.businessType}\nReadiness: ${booking.readiness}\n\nMessage: ${booking.message || 'No message provided'}`,
+      startTime,
+      endTime,
+      attendees: [booking.workEmail, process.env.ADMIN_EMAIL || ''].filter(Boolean),
+      timeZone: booking.timezone,
+    })
+
+    // Check if calendar event creation failed
+    if (!calendarResult.success || !calendarResult.meetLink) {
+      console.error('Failed to create Google Calendar event:', calendarResult.error)
+      return res.status(500).json({
+        success: false,
+        error: calendarResult.error || 'Failed to create calendar event. Please try again or contact support.'
+      })
+    }
+
+    const meetLink = calendarResult.meetLink
 
     // Send confirmation email to customer
     try {
@@ -255,10 +287,11 @@ export default async function handler(
       }
     }
 
-    // Return success response
+    // Return success response with real Google Meet link
     return res.status(200).json({
       success: true,
-      meetLink
+      meetLink,
+      eventId: calendarResult.eventId
     })
 
   } catch (error: any) {
@@ -268,19 +301,4 @@ export default async function handler(
       error: 'Internal server error. Please try again later.'
     })
   }
-}
-
-// Helper function to generate a random Google Meet-style code
-function generateMeetCode(): string {
-  const chars = 'abcdefghijklmnopqrstuvwxyz'
-  const segments = 3
-  const segmentLength = 3
-
-  const code = Array.from({ length: segments }, () => {
-    return Array.from({ length: segmentLength }, () =>
-      chars[Math.floor(Math.random() * chars.length)]
-    ).join('')
-  }).join('-')
-
-  return code
 }

@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Layout from '../components/Layout'
 import CTAButtons from '../components/CTAButtons'
-import InstagramShowcase from '../Images/instagram.jpg'
+import InstagramShowcase from '../Images/instagram.webp'
 
 const highlights = [
   'AI matching, community-first - Rank creators by local relevance, audience overlap, and trust signals (meaningful comments, saves, repeat viewers)',

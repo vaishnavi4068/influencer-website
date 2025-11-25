@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Layout from '../components/Layout'
 import CTAButtons from '../components/CTAButtons'
-import SocialTexture from '../Images/social.jpg'
+import SocialTexture from '../Images/social.webp'
 
 export default function RippleBriefsPage() {
   return (

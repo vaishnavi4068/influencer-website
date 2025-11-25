@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import InstagramShowcase from '../Images/instagram.jpg'
+import InstagramShowcase from '../Images/instagram.webp'
 
 const brandBenefits = [
   'Right creators, fast – RippleMatch ranks local/nano/micro creators by fit.',

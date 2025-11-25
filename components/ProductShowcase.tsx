@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import InstagramShowcase from '../Images/instagram.jpg'
-import SocialTexture from '../Images/social.jpg'
-import ThirdImage from '../Images/third.jpg'
-import FourthImage from '../Images/fourth.jpg'
-import ManagerImage from '../Images/manager.jpg'
+import InstagramShowcase from '../Images/instagram.webp'
+import SocialTexture from '../Images/social.webp'
+import ThirdImage from '../Images/third.webp'
+import FourthImage from '../Images/fourth.webp'
+import ManagerImage from '../Images/manager.webp'
 
 const offerings = [
   {

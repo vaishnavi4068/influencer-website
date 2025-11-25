@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Layout from '../components/Layout'
 import CTAButtons from '../components/CTAButtons'
-import OrbitWorkspace from '../Images/third.jpg'
+import OrbitWorkspace from '../Images/third.webp'
 
 const highlights = [
   'Single orbit, zero chaos – One calm dashboard for briefs, rosters, timelines, and status',
