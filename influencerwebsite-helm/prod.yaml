@@ -13,10 +13,13 @@ service:
 ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: "web"   # ensure port 80
+    traefik.ingress.kubernetes.io/router.priority: "1"
   hosts:
     - host: growripple.ai
       paths:
-        - path: /
+        - path: /*
           pathType: Prefix
   tls:
     - hosts:
