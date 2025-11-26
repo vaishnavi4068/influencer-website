@@ -1,0 +1,56 @@
+replicaCount: 1
+namespace: qa
+environment: qa
+image:
+  repository: us-east1-docker.pkg.dev/microdrive-dev/client-api/client-api
+  tag: dev-984
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: clientapi.microdrivedrillo.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - clientapi.microdrivedrillo.com
+      secretName: md.microdrivedrillo.com-tls
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+resources:
+  requests:
+    memory: "600Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
+
+env:
+- name: CLIENT_DB_URL
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: CLIENT_DB_URL
+- name: DB_USER
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: DB_USER
+- name: DB_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: DB_PASSWORD
