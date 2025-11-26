@@ -14,13 +14,13 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: prod.growripple.ai
+    - host: growripple.ai
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - prod.growripple.ai
+        - growripple.ai
       secretName: growripple.ai-tls
 
 autoscaling:
