@@ -19,19 +19,12 @@ ingress:
   hosts:
     - host: growripple.ai
       paths:
-        - path: /.well-known/acme-challenge/*
-          pathType: Prefix
-          backend:
-            service:
-              name: cm-acme-http-solver-76z7m
-              port:
-                number: 8089
-        - path: /*
+        - path: /
           pathType: Prefix
   tls:
     - hosts:
         - growripple.ai
-      secretName: growripple.ai-tls
+      secretName: prod-growripple.ai-tls
 
 autoscaling:
   enabled: true
