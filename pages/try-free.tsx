@@ -75,13 +75,13 @@ export default function TryFreePage() {
                     <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#0f1f32]/70">{section.prompt}</p>
                     <div className="mt-4 flex flex-col sm:flex-row gap-4">
                       <Link
-                        href="/coming-soon"
+                        href={`${process.env.NEXT_PUBLIC_INFLUENCER_SIGNUP_URL}/signup`}
                         className="inline-flex items-center justify-center rounded-full bg-[#0f1f32] text-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.35em] shadow-[0_25px_60px_-30px_rgba(15,31,50,0.65)] hover:-translate-y-0.5 transition"
                       >
                         Sign Up
                       </Link>
                       <Link
-                        href="/coming-soon"
+                        href={`${process.env.NEXT_PUBLIC_INFLUENCER_SIGNUP_URL}/login`}
                         className="inline-flex items-center justify-center rounded-full border border-[#0f1f32] px-8 py-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#0f1f32] hover:bg-[#0f1f32]/5 transition"
                       >
                         Sign In
