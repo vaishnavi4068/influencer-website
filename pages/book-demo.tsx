@@ -15,7 +15,7 @@ export default function BookDemoPage() {
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
-  const [timezone, setTimezone] = useState('Asia/Kolkata')
+  const [timezone, setTimezone] = useState('America/Chicago')
   const [showBookingForm, setShowBookingForm] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -372,7 +372,7 @@ export default function BookDemoPage() {
                       >
                         <option value="Asia/Kolkata">India Standard Time ({getCurrentTime()})</option>
                         <option value="America/New_York">Eastern Time (ET)</option>
-                        <option value="America/Chicago">Central Time (CT)</option>
+                        <option value="America/Chicago">Central Time (CT/CDT - Chicago)</option>
                         <option value="America/Denver">Mountain Time (MT)</option>
                         <option value="America/Los_Angeles">Pacific Time (PT)</option>
                         <option value="Europe/London">Greenwich Mean Time (GMT)</option>

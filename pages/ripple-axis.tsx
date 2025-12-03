@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Layout from '../components/Layout'
 import CTAButtons from '../components/CTAButtons'
+import Image from 'next/image'
+import AnalyticsImg from '../Images/analytics .png'
 
 const highlights = [
   'Everything in one place: Plan, review, approve, and post without the chaos.',
@@ -41,17 +43,12 @@ export default function RippleAxisPage() {
                   <CTAButtons />
                 </div>
                 <div className="rounded-[32px] overflow-hidden border border-white/30 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.4)] bg-black/30 w-full">
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    className="w-full h-auto object-contain"
-                  >
-                    <source src="/Images/dashboard.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
+                  <Image
+                    src={AnalyticsImg}
+                    alt="Analytics dashboard preview for RippleAxis"
+                    className="w-full h-auto object-cover"
+                    priority
+                  />
                 </div>
               </div>
             </div>

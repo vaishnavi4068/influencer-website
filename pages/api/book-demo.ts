@@ -4,10 +4,6 @@ import Mailgun from 'mailgun.js'
 import { createCalendarEvent } from '../../lib/google-calendar'
 
 const mailgun = new Mailgun(FormData)
-const mg = mailgun.client({
-  username: 'api',
-  key: process.env.MAILGUN_API_KEY || '',
-})
 
 interface BookingRequest {
   name: string
@@ -29,6 +25,7 @@ interface BookingRequest {
 interface BookingResponse {
   success: boolean
   meetLink?: string
+  eventId?: string
   error?: string
 }
 
@@ -42,6 +39,20 @@ export default async function handler(
   }
 
   try {
+    // Guard against missing Mailgun config so we fail gracefully instead of throwing at import time
+    if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
+      console.error('MAILGUN credentials missing - cannot send booking emails')
+      return res.status(500).json({
+        success: false,
+        error: 'Email service is not configured. Please contact support.'
+      })
+    }
+    const mg = mailgun.client({
+      username: 'api',
+      key: process.env.MAILGUN_API_KEY
+    })
+    const mailFrom = process.env.MAILGUN_FROM || `GrowRipple.ai <noreply@${process.env.MAILGUN_DOMAIN}>`
+
     const booking: BookingRequest = req.body
 
     // Validate required fields
@@ -59,24 +70,6 @@ export default async function handler(
       return res.status(400).json({
         success: false,
         error: 'Invalid email format'
-      })
-    }
-
-    // Check if Mailgun API key is configured
-    if (!process.env.MAILGUN_API_KEY) {
-      console.error('MAILGUN_API_KEY is not configured')
-      return res.status(500).json({
-        success: false,
-        error: 'Email service is not configured. Please contact support.'
-      })
-    }
-
-    // Check if Mailgun domain is configured
-    if (!process.env.MAILGUN_DOMAIN) {
-      console.error('MAILGUN_DOMAIN is not configured')
-      return res.status(500).json({
-        success: false,
-        error: 'Email service is not configured. Please contact support.'
       })
     }
 
@@ -115,6 +108,17 @@ export default async function handler(
     const endTime = new Date(startTime)
     endTime.setMinutes(endTime.getMinutes() + 30)
 
+    // Ensure Google Calendar is configured before attempting to create events
+    const missingGoogleEnv = ['GOOGLE_SERVICE_ACCOUNT_EMAIL', 'GOOGLE_PRIVATE_KEY', 'GOOGLE_CALENDAR_ID']
+      .filter((key) => !process.env[key])
+    if (missingGoogleEnv.length > 0) {
+      console.error('Google Calendar env vars missing:', missingGoogleEnv.join(', '))
+      return res.status(500).json({
+        success: false,
+        error: 'Calendar service is not configured. Please contact support.'
+      })
+    }
+
     // Create Google Calendar event with Google Meet link
     const calendarResult = await createCalendarEvent({
       summary: `GrowRipple Demo - ${booking.firstName} ${booking.lastName}`,
@@ -139,7 +143,7 @@ export default async function handler(
     // Send confirmation email to customer
     try {
       await mg.messages.create(process.env.MAILGUN_DOMAIN || '', {
-        from: `GrowRipple.ai <noreply@${process.env.MAILGUN_DOMAIN}>`,
+        from: mailFrom,
         to: [booking.workEmail],
         subject: `Demo Booking Confirmed - ${formattedDate} at ${booking.time}`,
         html: `
@@ -204,7 +208,7 @@ export default async function handler(
     if (process.env.ADMIN_EMAIL) {
       try {
         await mg.messages.create(process.env.MAILGUN_DOMAIN || '', {
-          from: `GrowRipple.ai <noreply@${process.env.MAILGUN_DOMAIN}>`,
+          from: mailFrom,
           to: [process.env.ADMIN_EMAIL],
           subject: `🔔 New Demo Booking: ${booking.firstName} ${booking.lastName}`,
           html: `

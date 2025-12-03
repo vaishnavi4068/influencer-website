@@ -1,12 +1,23 @@
 import Head from 'next/head'
+import dynamic from 'next/dynamic'
 import Layout from '../components/Layout'
 import Hero from '../components/Hero'
-import BrandMarquee from '../components/BrandMarquee'
-import ProductShowcase from '../components/ProductShowcase'
-import CreatorSection from '../components/CreatorSection'
-import PricingSection from '../components/PricingSection'
-import Features from '../components/Features'
-import Footer from '../components/Footer'
+
+// Lazy load below-the-fold components to reduce initial bundle size
+const BrandMarquee = dynamic(() => import('../components/BrandMarquee'), {
+  loading: () => <div className="h-32 bg-[#1ECAD3]" />
+})
+const ProductShowcase = dynamic(() => import('../components/ProductShowcase'), {
+  loading: () => <div className="h-96 bg-[#1ECAD3]" />
+})
+const CreatorSection = dynamic(() => import('../components/CreatorSection'), {
+  loading: () => <div className="h-96 bg-[#1ECAD3]" />
+})
+const PricingSection = dynamic(() => import('../components/PricingSection'), {
+  loading: () => <div className="h-96 bg-[#1ECAD3]" />
+})
+const Features = dynamic(() => import('../components/Features'))
+const Footer = dynamic(() => import('../components/Footer'))
 
 export default function Home() {
   return (

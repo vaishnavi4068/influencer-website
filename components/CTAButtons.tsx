@@ -12,7 +12,7 @@ const ctas = [
   { href: '/book-demo', label: 'Book a Demo' }
 ]
 
-const toneClasses: Record<Tone, { primaryBg: string; primaryText: string; secondaryBorder: string; secondaryText: string; secondaryHover: string }> = {
+const toneClasses: Record<Tone, { primaryBg: string; primaryText: string; secondaryBorder: string; secondaryHover: string }> = {
   light: {
     primaryBg: 'bg-white',
     primaryText: 'text-[#1ECAD3]',

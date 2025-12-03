@@ -1,7 +1,12 @@
 // Feature section temporarily disabled per request.
 // Keeping original implementation below for easy restoration.
 /*
-import DiscoverCard from './DiscoverCard'
+import dynamic from 'next/dynamic'
+
+// Lazy load DiscoverCard since it uses framer-motion (heavy animation library)
+const DiscoverCard = dynamic(() => import('./DiscoverCard'), {
+    loading: () => <div className="py-20 bg-white min-h-[400px]" />
+})
 
 export default function Features() {
     const features = [

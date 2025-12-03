@@ -67,7 +67,6 @@ export default function Footer() {
         <div className="max-w-6xl mx-auto px-6 lg:px-10 py-4 flex flex-col sm:flex-row items-center justify-between text-xs text-white/60 gap-3">
           <p>© {new Date().getFullYear()} GrowRipple. All rights reserved.</p>
           <div className="flex items-center gap-4 text-xs">
-            <Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition">Terms of Service</Link>
           </div>
         </div>

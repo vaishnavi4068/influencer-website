@@ -58,7 +58,7 @@ export default function ProductShowcase() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center px-5 py-2 mb-4 rounded-full border border-white/40 bg-white/10 uppercase tracking-[0.35em] text-xs text-white/70 font-semibold">
-            Platform Capabilities
+            Product Capabilities
           </div>
           <h2 className="mt-6 text-3xl sm:text-4xl font-black">Every Tool You Need, Built Into One Ripple</h2>
           <p className="mt-4 text-lg text-white/90">

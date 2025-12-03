@@ -60,42 +60,69 @@ export async function createCalendarEvent(
     const calendar = getCalendarService()
     const calendarId = process.env.GOOGLE_CALENDAR_ID
 
-    // Create the event (without Google Meet and attendees due to service account limitations)
-    // Service accounts cannot create Google Meet links without Google Workspace + Domain-Wide Delegation
-    const response = await calendar.events.insert({
-      calendarId: calendarId,
-      requestBody: {
-        summary: event.summary,
-        description: event.description,
-        start: {
-          dateTime: event.startTime.toISOString(),
-          timeZone: event.timeZone,
-        },
-        end: {
-          dateTime: event.endTime.toISOString(),
-          timeZone: event.timeZone,
-        },
-        // Note: Google Meet removed due to service account limitations
-        // You can manually add video conferencing after the event is created
-        reminders: {
-          useDefault: false,
-          overrides: [
-            { method: 'popup', minutes: 30 }, // 30 minutes before
-          ],
-        },
+    const allowMeet = process.env.GOOGLE_ENABLE_MEET === 'true'
+    const requestBody: any = {
+      summary: event.summary,
+      description: event.description,
+      start: {
+        dateTime: event.startTime.toISOString(),
+        timeZone: event.timeZone,
       },
-      sendUpdates: 'none',
-    })
+      end: {
+        dateTime: event.endTime.toISOString(),
+        timeZone: event.timeZone,
+      },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'popup', minutes: 30 }, // 30 minutes before
+        ],
+      },
+    }
 
-    // Note: Google Meet links are not available with service accounts
-    // The event is created successfully, but without video conferencing
-    // You can manually add a Google Meet link to the calendar event later
-    const meetLink = response.data.hangoutLink || response.data.conferenceData?.entryPoints?.find(
-      (entry) => entry.entryPointType === 'video'
-    )?.uri
+    // Try to create a Google Meet if enabled and permitted by the workspace
+    if (allowMeet) {
+      requestBody.conferenceData = {
+        createRequest: {
+          requestId: `meet-${Date.now()}`,
+          conferenceSolutionKey: { type: 'hangoutsMeet' },
+        },
+      }
+    }
 
-    // Generate a generic Google Meet link for the email
-    // Users can create their own Meet room and share this link
+    const attemptInsert = async (withMeet: boolean) =>
+      calendar.events.insert({
+        calendarId: calendarId,
+        requestBody: withMeet ? requestBody : { ...requestBody, conferenceData: undefined },
+        sendUpdates: 'none',
+        conferenceDataVersion: withMeet ? 1 : undefined,
+      })
+
+    let response
+    try {
+      response = await attemptInsert(allowMeet)
+    } catch (err: any) {
+      // If meet creation is blocked, retry without it
+      const shouldRetryWithoutMeet =
+        allowMeet &&
+        (err?.code === 403 ||
+          (typeof err?.message === 'string' && err.message.toLowerCase().includes('conference')))
+
+      if (shouldRetryWithoutMeet) {
+        console.warn('Meet creation failed; retrying without conference data', err?.message)
+        response = await attemptInsert(false)
+      } else {
+        throw err
+      }
+    }
+
+    const meetLink =
+      response.data.hangoutLink ||
+      response.data.conferenceData?.entryPoints?.find(
+        (entry) => entry.entryPointType === 'video'
+      )?.uri
+
+    // Generate a generic Google Meet link as a fallback
     const fallbackMeetLink = `https://meet.google.com/new`
 
     return {
