@@ -7,7 +7,7 @@ import FacebookIcon from '../Images/facebook (1).png'
 import YoutubeIcon from '../Images/youtube.png'
 
 const socialLinks = [
-  { label: 'Instagram', icon: InstaIcon, href: '#' },
+  { label: 'Instagram', icon: InstaIcon, href: 'https://www.instagram.com/growripple.ai/' },
   { label: 'LinkedIn', icon: LinkedinIcon, href: '#' },
   { label: 'Facebook', icon: FacebookIcon, href: '#' },
   { label: 'YouTube', icon: YoutubeIcon, href: '#' }

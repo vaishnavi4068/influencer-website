@@ -10,7 +10,7 @@ export default function ComingSoon({
   subtext = "We're building the next experience for creators and brands - stay tuned."
 }: ComingSoonProps) {
   return (
-    <section className="relative min-h-screen bg-[#041a3d] text-white overflow-hidden flex items-center justify-center px-6">
+    <section className="relative min-h-screen bg-[#1ECAD3] text-white overflow-hidden flex items-center justify-center px-6">
       <div className="absolute inset-0">
         <div className="absolute top-10 left-12 w-36 h-36 rounded-full bg-[#00d0c2]/30 blur-[90px]" />
         <div className="absolute bottom-14 right-16 w-52 h-52 rounded-full bg-[#1ECAD3]/40 blur-[100px]" />
