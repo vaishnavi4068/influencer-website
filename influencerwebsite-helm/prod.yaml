@@ -1,0 +1,39 @@
+replicaCount: 1
+namespace: prod
+environment: prod
+image:
+  repository: us-east1-docker.pkg.dev/microdrive-dev/influencer-website/iw
+  tag: dev-984
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: growripple.ai
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - growripple.ai
+      secretName: prod-growripple.ai-tls
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+resources:
+  requests:
+    memory: "600Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
