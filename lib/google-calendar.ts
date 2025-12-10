@@ -16,29 +16,58 @@ export interface CreateEventResponse {
   error?: string
 }
 
+interface GoogleCalendarConfig {
+  calendarId: string
+  serviceAccountEmail: string
+  privateKey: string
+}
+
+function getGoogleCalendarConfig(): GoogleCalendarConfig {
+  const serviceAccountEmail = (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || '').trim()
+  const calendarId = (process.env.GOOGLE_CALENDAR_ID || '').trim()
+  const rawPrivateKey = process.env.GOOGLE_PRIVATE_KEY
+
+  if (!serviceAccountEmail) {
+    throw new Error('GOOGLE_SERVICE_ACCOUNT_EMAIL is not configured')
+  }
+  if (!rawPrivateKey) {
+    throw new Error('GOOGLE_PRIVATE_KEY is not configured')
+  }
+  if (!calendarId) {
+    throw new Error('GOOGLE_CALENDAR_ID is not configured')
+  }
+
+  const privateKey = rawPrivateKey.replace(/\\n/g, '\n')
+
+  return {
+    calendarId,
+    serviceAccountEmail,
+    privateKey,
+  }
+}
+
+function parseGoogleApiError(error: any) {
+  const apiError = error?.response?.data?.error || error?.errors?.[0] || error
+  const nestedError = apiError?.errors?.[0]
+
+  return {
+    code: error?.code || apiError?.code,
+    reason: apiError?.status || nestedError?.reason,
+    message: apiError?.message || nestedError?.message || error?.message,
+  }
+}
+
 /**
  * Creates a Google Calendar service instance using service account credentials
  */
-function getCalendarService() {
+function getCalendarService(config?: GoogleCalendarConfig) {
   try {
-    // Check if required environment variables are set
-    if (!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL) {
-      throw new Error('GOOGLE_SERVICE_ACCOUNT_EMAIL is not configured')
-    }
-    if (!process.env.GOOGLE_PRIVATE_KEY) {
-      throw new Error('GOOGLE_PRIVATE_KEY is not configured')
-    }
-    if (!process.env.GOOGLE_CALENDAR_ID) {
-      throw new Error('GOOGLE_CALENDAR_ID is not configured')
-    }
-
-    // Parse the private key (it may have escaped newlines)
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
+    const resolvedConfig = config || getGoogleCalendarConfig()
 
     // Create JWT client for service account authentication
     const auth = new google.auth.JWT({
-      email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      key: privateKey,
+      email: resolvedConfig.serviceAccountEmail,
+      key: resolvedConfig.privateKey,
       scopes: ['https://www.googleapis.com/auth/calendar'],
     })
 
@@ -56,11 +85,16 @@ function getCalendarService() {
 export async function createCalendarEvent(
   event: CalendarEvent
 ): Promise<CreateEventResponse> {
-  try {
-    const calendar = getCalendarService()
-    const calendarId = process.env.GOOGLE_CALENDAR_ID
+  const allowMeet = process.env.GOOGLE_ENABLE_MEET === 'true'
+  let calendarId = ''
+  let serviceAccountEmail = ''
 
-    const allowMeet = process.env.GOOGLE_ENABLE_MEET === 'true'
+  try {
+    const config = getGoogleCalendarConfig()
+    calendarId = config.calendarId
+    serviceAccountEmail = config.serviceAccountEmail
+    const calendar = getCalendarService(config)
+
     const requestBody: any = {
       summary: event.summary,
       description: event.description,
@@ -72,6 +106,7 @@ export async function createCalendarEvent(
         dateTime: event.endTime.toISOString(),
         timeZone: event.timeZone,
       },
+      attendees: event.attendees.map((email) => ({ email })),
       reminders: {
         useDefault: false,
         overrides: [
@@ -94,7 +129,7 @@ export async function createCalendarEvent(
       calendar.events.insert({
         calendarId: calendarId,
         requestBody: withMeet ? requestBody : { ...requestBody, conferenceData: undefined },
-        sendUpdates: 'none',
+        sendUpdates: 'all',
         conferenceDataVersion: withMeet ? 1 : undefined,
       })
 
@@ -131,26 +166,52 @@ export async function createCalendarEvent(
       eventId: response.data.id || undefined,
     }
   } catch (error: any) {
-    console.error('Failed to create calendar event:', error)
+    const { code, reason, message } = parseGoogleApiError(error)
+    const calendarContext = calendarId || (process.env.GOOGLE_CALENDAR_ID || '').trim()
+    const serviceContext =
+      serviceAccountEmail || (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || '').trim()
+
+    console.error('Failed to create calendar event:', {
+      code,
+      reason,
+      message,
+      calendarId: calendarContext,
+      serviceAccountEmail: serviceContext,
+      rawError: error,
+    })
 
     // Provide more specific error messages
-    if (error.code === 401) {
+    if (code === 401) {
       return {
         success: false,
         error: 'Google Calendar authentication failed. Please check service account credentials.',
       }
     }
 
-    if (error.code === 403) {
+    if (reason === 'accessNotConfigured') {
       return {
         success: false,
-        error: 'Permission denied. Please ensure the service account has access to the calendar.',
+        error:
+          'Google Calendar API is not enabled for this project. Enable it in Google Cloud Console and try again.',
+      }
+    }
+
+    if (code === 403) {
+      const hint =
+        'Confirm the calendar is shared with the service account (Make changes to events) and that the Calendar API is enabled.'
+      const context = calendarContext
+        ? `Calendar ID "${calendarContext}" with service account "${serviceContext}". `
+        : ''
+
+      return {
+        success: false,
+        error: `${message || 'Permission denied while creating the calendar event.'} ${context}${hint}`.trim(),
       }
     }
 
     return {
       success: false,
-      error: error.message || 'Failed to create calendar event',
+      error: message || 'Failed to create calendar event',
     }
   }
 }
@@ -160,11 +221,11 @@ export async function createCalendarEvent(
  */
 export async function deleteCalendarEvent(eventId: string): Promise<boolean> {
   try {
-    const calendar = getCalendarService()
-    const calendarId = process.env.GOOGLE_CALENDAR_ID
+    const config = getGoogleCalendarConfig()
+    const calendar = getCalendarService(config)
 
     await calendar.events.delete({
-      calendarId: calendarId || '',
+      calendarId: config.calendarId,
       eventId,
       sendUpdates: 'all', // Notify attendees
     })
@@ -184,8 +245,8 @@ export async function updateCalendarEvent(
   event: Partial<CalendarEvent>
 ): Promise<CreateEventResponse> {
   try {
-    const calendar = getCalendarService()
-    const calendarId = process.env.GOOGLE_CALENDAR_ID
+    const config = getGoogleCalendarConfig()
+    const calendar = getCalendarService(config)
 
     const updateData: any = {}
 
@@ -208,7 +269,7 @@ export async function updateCalendarEvent(
     }
 
     const response = await calendar.events.patch({
-      calendarId: calendarId || '',
+      calendarId: config.calendarId,
       eventId,
       requestBody: updateData,
       sendUpdates: 'all', // Notify attendees
