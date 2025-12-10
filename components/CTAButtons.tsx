@@ -12,17 +12,19 @@ const ctas = [
   { href: '/book-demo', label: 'Book a Demo' }
 ]
 
-const toneClasses: Record<Tone, { primaryBg: string; primaryText: string; secondaryBorder: string; secondaryHover: string }> = {
+const toneClasses: Record<Tone, { primaryBg: string; primaryText: string; secondaryBorder: string; secondaryText: string; secondaryHover: string }> = {
   light: {
     primaryBg: 'bg-white',
     primaryText: 'text-[#1ECAD3]',
-    secondaryBorder: 'border-white text-white',
+    secondaryBorder: 'border-white',
+    secondaryText: 'text-white',
     secondaryHover: 'hover:bg-white/10'
   },
   dark: {
     primaryBg: 'bg-[#1ECAD3]',
     primaryText: 'text-white',
-    secondaryBorder: 'border-[#1ECAD3] text-[#1ECAD3]',
+    secondaryBorder: 'border-[#1ECAD3]',
+    secondaryText: 'text-[#1ECAD3]',
     secondaryHover: 'hover:bg-[#1ECAD3]/10'
   }
 }
@@ -40,7 +42,7 @@ export default function CTAButtons({ className = '', tone = 'light' }: CTAButton
       </Link>
       <Link
         href={ctas[1].href}
-        className={`inline-flex w-full sm:w-auto items-center justify-center rounded-full border px-10 py-3 text-sm font-semibold transition ${styles.secondaryBorder} ${styles.secondaryHover}`}
+        className={`inline-flex w-full sm:w-auto items-center justify-center rounded-full border px-10 py-3 text-sm font-semibold transition ${styles.secondaryBorder} ${styles.secondaryText} ${styles.secondaryHover}`}
       >
         {ctas[1].label}
       </Link>

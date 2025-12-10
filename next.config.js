@@ -32,7 +32,20 @@ const nextConfig = {
         removeConsole: process.env.NODE_ENV === 'production' ? {
             exclude: ['error', 'warn']
         } : false
-    }
+    },
+
+    // Enable experimental features for better performance
+    experimental: {
+        // Optimize fonts and package imports
+        optimizePackageImports: ['framer-motion', 'date-fns'],
+    },
+
+    // Production optimizations
+    poweredByHeader: false, // Remove X-Powered-By header
+    reactStrictMode: true, // Enable React strict mode for better error detection
+
+    // Enable static optimization where possible
+    output: 'standalone', // Optimize for deployment
 }
 
 module.exports = nextConfig
