@@ -8,7 +8,7 @@ interface CTAButtonsProps {
 }
 
 const ctas = [
-  { href: '/try-free', label: 'Launch a Campaign' },
+  { href: 'https://client.growripple.ai/signup', label: 'Launch a Campaign' },
   { href: '/book-demo', label: 'Book a Demo' }
 ]
 

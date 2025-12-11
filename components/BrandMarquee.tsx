@@ -55,12 +55,14 @@ export default function BrandMarquee() {
                 </ul>
               </div>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/coming-soon"
+                <a
+                  href="https://client.growripple.ai/signup"
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex flex-1 min-w-[160px] items-center justify-center rounded-full bg-white text-[#1ECAD3] px-8 py-3 text-sm font-semibold shadow-[0_25px_50px_-30px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 transition-transform"
                 >
                   Sign Up
-                </Link>
+                </a>
                 <Link
                   href="/book-demo"
                   className="inline-flex flex-1 min-w-[160px] items-center justify-center rounded-full border border-white/60 text-white px-8 py-3 text-sm font-semibold hover:bg-white/10 transition"

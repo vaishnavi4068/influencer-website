@@ -54,26 +54,30 @@ export default function TryFreePage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-stretch">
               {splitSections.map(section => (
                 <section
                   key={section.id}
                   className="relative rounded-[36px] overflow-hidden border border-[#0f1f32]/10 shadow-[0_45px_120px_-60px_rgba(15,31,50,0.35)] min-h-[460px] flex bg-[#f1f8ff]"
                 >
-                  <div className="relative z-10 flex flex-col justify-center items-center text-center gap-5 p-10 w-full">
-                    <div className="inline-flex items-center rounded-full border border-[#0f1f32]/15 bg-white/70 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-[#0f1f32]/70">
-                      {section.label}
+                  <div className="relative z-10 flex h-full flex-col justify-between p-10 w-full">
+                    <div className="flex flex-col items-center text-center gap-5">
+                      <div className="inline-flex items-center rounded-full border border-[#0f1f32]/15 bg-white/70 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-[#0f1f32]/70">
+                        {section.label}
+                      </div>
+                      <h2
+                        className="text-[26px] md:text-[34px] font-black leading-snug"
+                        dangerouslySetInnerHTML={{ __html: section.headline }}
+                      />
+                      <p
+                        className="text-base md:text-lg text-[#26394d] leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: section.description }}
+                      />
+                      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#0f1f32]/70">
+                        {section.prompt}
+                      </p>
                     </div>
-                    <h2
-                      className="text-[26px] md:text-[34px] font-black leading-snug"
-                      dangerouslySetInnerHTML={{ __html: section.headline }}
-                    />
-                    <p
-                      className="text-base md:text-lg text-[#26394d] leading-relaxed"
-                      dangerouslySetInnerHTML={{ __html: section.description }}
-                    />
-                    <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#0f1f32]/70">{section.prompt}</p>
-                    <div className="mt-4 flex flex-col sm:flex-row gap-4">
+                    <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
                       {section.id === 'brand' ? (
                         <a
                           href="https://client.growripple.ai/signup"

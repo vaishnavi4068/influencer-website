@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/router';
 import GrowRippleLogo from '../Images/white-logo.png'
 
 const ArrowIcon = () => (
@@ -34,14 +33,7 @@ const CalendarIcon = () => (
         <line x1="3" y1="10" x2="21" y2="10" />
     </svg>
 );
-
 export default function Hero() {
-    const router = useRouter();
-
-    const handleLaunchCampaign = () => {
-        router.push('/coming-soon');
-    }
-
     return (
         <section className="relative overflow-hidden bg-[#1ECAD3] text-white pt-32 pb-28" style={{ fontFamily: "'Space Grotesk', 'Segoe UI', sans-serif" }}>
             <div className="absolute inset-0 pointer-events-none">
@@ -77,15 +69,17 @@ export default function Hero() {
                     Find real creators. Run smarter campaigns. See results that matter— with AI at every step.
                 </p>
                 <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-5">
-                    <button
-                        onClick={handleLaunchCampaign}
+                    <a
+                        href="https://client.growripple.ai/signup"
+                        target="_blank"
+                        rel="noreferrer"
                         className="group inline-flex items-center justify-center gap-3 rounded-full bg-white text-[#1ECAD3] px-10 py-4 text-lg font-semibold shadow-[0_25px_50px_-25px_rgba(0,0,0,0.35)] transition-transform hover:-translate-y-0.5"
                     >
                         Launch Campaign
                         <span className="transition-transform group-hover:translate-x-1">
                             <ArrowIcon />
                         </span>
-                    </button>
+                    </a>
                     <Link
                         href="/book-demo"
                         className="inline-flex items-center gap-3 rounded-full bg-white text-[#1ECAD3] px-10 py-4 text-lg font-semibold shadow-[0_25px_50px_-25px_rgba(0,0,0,0.35)] transition-transform hover:-translate-y-0.5"

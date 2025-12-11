@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 const whyChoose = [
   'Smart campaign matching - Ripple AI pairs you with brands that align with your content.',
   'Clear, creator-friendly briefs - ready-to-create instructions that reduce back-and-forth.',
@@ -97,12 +95,14 @@ export default function CreatorSection() {
         </div>
 
         <div className="mt-14 text-center">
-          <Link
-            href="/try-free"
+          <a
+            href="https://influencer.growripple.ai/signup/"
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center justify-center rounded-full bg-white text-[#1ECAD3] px-12 py-4 text-lg font-semibold shadow-[0_30px_60px_-35px_rgba(0,0,0,0.4)] hover:translate-y-0.5 transition-transform"
           >
             Try GrowRipple AI
-          </Link>
+          </a>
         </div>
       </div>
     </section>
