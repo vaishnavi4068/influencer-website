@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import favicon from '../Images/favicon-32x32.png'
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -8,7 +9,8 @@ export default function App({ Component, pageProps }: AppProps) {
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="description" content="Microdrive - Static Website" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href={favicon.src} type="image/png" />
+                <link rel="apple-touch-icon" href={favicon.src} />
             </Head>
             <Component {...pageProps} />
         </>
