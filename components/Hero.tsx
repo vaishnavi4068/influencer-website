@@ -70,7 +70,7 @@ export default function Hero() {
                 </p>
                 <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-5">
                     <a
-                        href="https://client.growripple.ai/signup"
+                        href="https://client.growripple.ai/login?next=/campaigns/create"
                         target="_blank"
                         rel="noreferrer"
                         className="group inline-flex items-center justify-center gap-3 rounded-full bg-white text-[#1ECAD3] px-10 py-4 text-lg font-semibold shadow-[0_25px_50px_-25px_rgba(0,0,0,0.35)] transition-transform hover:-translate-y-0.5"
