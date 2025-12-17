@@ -37,3 +37,11 @@ resources:
   limits:
     memory: "1Gi"
     cpu: "500m"
+
+
+env:
+- name: VUE_APP_API_URL
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: VUE_APP_API_URL
