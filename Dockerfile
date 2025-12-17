@@ -4,5 +4,6 @@ ARG VUE_APP_API_URL
 ENV VUE_APP_API_URL=${VUE_APP_API_URL}
 COPY . .
 RUN npm install 
+RUN npm run build
 EXPOSE 3000
-CMD ["sh", "-c", "npm run dev"]
+CMD ["sh", "-c", "npm run start"]
