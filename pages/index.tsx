@@ -2,6 +2,7 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import Layout from '../components/Layout'
 import Hero from '../components/Hero'
+import favicon from '../Images/favicon_g.png'
 
 // Lazy load below-the-fold components to reduce initial bundle size
 const BrandMarquee = dynamic(() => import('../components/BrandMarquee'), {
@@ -26,7 +27,7 @@ export default function Home() {
         <title>GrowRipple.Ai</title>
         <meta name="description" content="A modern influencer marketing platform built with AI" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={favicon.src} />
       </Head>
 
       <Layout>

@@ -45,3 +45,73 @@ env:
     secretKeyRef:
       name: my-multi-key-secret
       key: VUE_APP_API_URL
+- name: RESEND_API_KEY
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: RESEND_API_KEY
+- name: FROM_EMAIL
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: FROM_EMAIL
+- name: ADMIN_EMAIL
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: ADMIN_EMAIL
+- name: MAILGUN_API_KEY
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: MAILGUN_API_KEY
+- name: MAILGUN_DOMAIN
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: MAILGUN_DOMAIN
+- name: MAILGUN_FROM
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: MAILGUN_FROM
+- name: ZOHO_CLIENT_ID
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: ZOHO_CLIENT_ID
+- name: ZOHO_CLIENT_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: ZOHO_CLIENT_SECRET
+- name: ZOHO_REFRESH_TOKEN
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: ZOHO_REFRESH_TOKEN
+- name: ZOHO_CALENDAR_ID
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: ZOHO_CALENDAR_ID
+- name: ZOHO_REGION
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: ZOHO_REGION
+- name: ZOHO_ENABLE_MEETING
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: ZOHO_ENABLE_MEETING
+- name: ZOHO_ORGANIZATION_ID
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: ZOHO_ORGANIZATION_ID
+- name: ZOHO_PRESENTER_ZUID
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: ZOHO_PRESENTER_ZUID

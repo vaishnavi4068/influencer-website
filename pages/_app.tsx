@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import favicon from '../Images/favicon-32x32.png'
+import favicon from '../Images/favicon_g.png'
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import FormData from 'form-data'
 import Mailgun from 'mailgun.js'
-import { createCalendarEvent } from '../../lib/google-calendar'
+import { createCalendarEvent } from '../../lib/zoho-calendar'
 
 const mailgun = new Mailgun(FormData)
 
@@ -108,18 +108,18 @@ export default async function handler(
     const endTime = new Date(startTime)
     endTime.setMinutes(endTime.getMinutes() + 30)
 
-    // Ensure Google Calendar is configured before attempting to create events
-    const missingGoogleEnv = ['GOOGLE_SERVICE_ACCOUNT_EMAIL', 'GOOGLE_PRIVATE_KEY', 'GOOGLE_CALENDAR_ID']
+    // Ensure Zoho Calendar is configured before attempting to create events
+    const missingZohoEnv = ['ZOHO_CLIENT_ID', 'ZOHO_CLIENT_SECRET', 'ZOHO_REFRESH_TOKEN', 'ZOHO_CALENDAR_ID']
       .filter((key) => !process.env[key])
-    if (missingGoogleEnv.length > 0) {
-      console.error('Google Calendar env vars missing:', missingGoogleEnv.join(', '))
+    if (missingZohoEnv.length > 0) {
+      console.error('Zoho Calendar env vars missing:', missingZohoEnv.join(', '))
       return res.status(500).json({
         success: false,
         error: 'Calendar service is not configured. Please contact support.'
       })
     }
 
-    // Create Google Calendar event with Google Meet link
+    // Create Zoho Calendar event with Zoho Meeting link
     const calendarResult = await createCalendarEvent({
       summary: `GrowRipple Demo - ${booking.firstName} ${booking.lastName}`,
       description: `Demo booking for ${booking.company}\n\nBusiness Type: ${booking.businessType}\nReadiness: ${booking.readiness}\n\nMessage: ${booking.message || 'No message provided'}`,
@@ -130,15 +130,20 @@ export default async function handler(
     })
 
     // Check if calendar event creation failed
-    if (!calendarResult.success || !calendarResult.meetLink) {
-      console.error('Failed to create Google Calendar event:', calendarResult.error)
+    if (!calendarResult.success) {
+      console.error('Failed to create Zoho Calendar event:', calendarResult.error)
       return res.status(500).json({
         success: false,
         error: calendarResult.error || 'Failed to create calendar event. Please try again or contact support.'
       })
     }
 
-    const meetLink = calendarResult.meetLink
+    // Use the meeting link if available, otherwise use a placeholder
+    const meetLink = calendarResult.meetLink || 'Calendar event created - meeting link will be sent separately'
+
+    if (!calendarResult.meetLink) {
+      console.warn('No meeting link was generated for the calendar event')
+    }
 
     // Send confirmation email to customer
     try {
@@ -180,7 +185,7 @@ export default async function handler(
                   </div>
 
                   <center>
-                    <a href="${meetLink}" class="button">Join Google Meet</a>
+                    <a href="${meetLink}" class="button">Join Meeting</a>
                   </center>
 
                   <p>We'll send you a reminder before the meeting. If you need to reschedule, please contact us.</p>
@@ -274,7 +279,7 @@ export default async function handler(
                   ` : ''}
 
                   <div style="text-align: center; margin-top: 30px;">
-                    <a href="${meetLink}" style="display: inline-block; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 25px; font-weight: bold;">Join Google Meet</a>
+                    <a href="${meetLink}" style="display: inline-block; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 25px; font-weight: bold;">Join Meeting</a>
                   </div>
 
                   <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
