@@ -2,7 +2,7 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import Layout from '../components/Layout'
 import Hero from '../components/Hero'
-import favicon from '../Images/favicon_g.png'
+import favicon from '../Images/FAVICONFINAL.png'
 
 // Lazy load below-the-fold components to reduce initial bundle size
 const BrandMarquee = dynamic(() => import('../components/BrandMarquee'), {
