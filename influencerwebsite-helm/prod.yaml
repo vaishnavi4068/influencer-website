@@ -45,6 +45,16 @@ env:
     secretKeyRef:
       name: my-multi-key-secret
       key: VUE_APP_API_URL
+- name: RESEND_API_KEY
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: RESEND_API_KEY
+- name: FROM_EMAIL
+  valueFrom:
+    secretKeyRef:
+      name: my-multi-key-secret
+      key: FROM_EMAIL
 - name: ADMIN_EMAIL
   valueFrom:
     secretKeyRef:
