@@ -16,7 +16,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="bg-black text-white border-t border-white/10">
-      <div className="max-w-6xl mx-auto px-6 lg:px-10 py-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr] items-center">
+      <div className="max-w-6xl mx-auto px-6 lg:px-10 py-10">
         <div className="space-y-4">
           <Image
             src={GrowRippleLogo}
@@ -26,7 +26,7 @@ export default function Footer() {
             className="h-14 w-auto"
             priority
           />
-          <p className="text-sm text-white/80 leading-relaxed">
+          <p className="text-sm text-white/80">
             AI-orchestrated creator partnerships that keep your brand authentic, measurable, and fast to market across every campaign.
           </p>
           <div className="flex items-center gap-3">
@@ -42,25 +42,6 @@ export default function Footer() {
               </a>
             ))}
           </div>
-        </div>
-        <div className="rounded-[24px] bg-white/5 border border-white/10 p-5 shadow-[0_20px_40px_-35px_rgba(0,0,0,0.8)]">
-          <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">Stay in the loop</h4>
-          <p className="mt-3 text-xs text-white/80">
-            Get monthly updates on AI-powered creator marketing plus new GrowRipple features.
-          </p>
-          <form className="mt-4 flex flex-col gap-2.5">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="rounded-full bg-white text-[#1ECAD3] px-4 py-2.5 text-sm font-semibold focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center rounded-full bg-white text-[#1ECAD3] px-4 py-2.5 text-sm font-semibold shadow-[0_20px_40px_-30px_rgba(0,0,0,0.5)] hover:-translate-y-0.5 transition"
-            >
-              Subscribe
-            </button>
-          </form>
         </div>
       </div>
       <div className="border-t border-white/5">

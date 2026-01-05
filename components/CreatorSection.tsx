@@ -2,7 +2,9 @@ const whyChoose = [
   'Smart campaign matching - Ripple AI pairs you with brands that align with your content.',
   'Clear, creator-friendly briefs - ready-to-create instructions that reduce back-and-forth.',
   'Opportunities your audience trusts - local and niche brands that fit your authentic community.',
-  'Fast, predictable payouts - submit, get approval, and get paid quickly with no surprises.'
+  'Fast, predictable payouts - submit, get approval, and get paid quickly with no surprises.',
+  'Nano, micro, and local creators.',
+  'Creators with authentic community engagement.'
 ]
 
 const howItWorks = [
@@ -12,17 +14,9 @@ const howItWorks = [
   'Get paid: Approval triggers a smooth payout - no chasing invoices.'
 ]
 
-const whoFor = ['Nano, micro, and local creators.', 'Creators with authentic community engagement.']
-
-const expectations = [
-  'Creative freedom - your voice comes first.',
-  'Clear, opt-in usage terms.',
-  'Friendly support whenever you need it.'
-]
-
 export default function CreatorSection() {
   return (
-    <section id="creators" className="relative overflow-hidden bg-[#1ECAD3] py-28 text-white">
+    <section id="creators" className="relative overflow-hidden bg-[#1ECAD3] py-16 text-white">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-x-0 top-12 flex justify-center gap-8">
           <span className="w-16 h-16 border-t-4 border-[#FFD43B] rounded-full" />
@@ -43,65 +37,40 @@ export default function CreatorSection() {
           </p>
         </div>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
-          <div className="rounded-[32px] border border-white/30 bg-[#f1f8ff] text-[#0f1f32] p-8 shadow-[0_45px_90px_-45px_rgba(0,0,0,0.3)]">
-            <h3 className="text-2xl font-semibold">Why Creators Choose RippleMaker</h3>
-            <ul className="mt-6 space-y-4 text-[#0f1f32]/85">
+        <div className="mt-10 grid gap-5 lg:grid-cols-2">
+          <div className="rounded-[24px] border border-white/30 bg-[#f1f8ff] text-[#0f1f32] p-5 shadow-[0_45px_90px_-45px_rgba(0,0,0,0.3)]">
+            <h3 className="text-lg font-semibold">Why Creators Choose RippleMaker</h3>
+            <ul className="mt-3 space-y-2.5 text-[#0f1f32]/85">
               {whyChoose.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-[#FFD43B]" aria-hidden="true" />
-                  <span>{item}</span>
+                <li key={item} className="flex items-start gap-2.5">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[#FFD43B]" aria-hidden="true" />
+                  <span className="text-sm">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="rounded-[32px] border border-white/30 bg-[#f1f8ff] text-[#0f1f32] p-8 shadow-[0_45px_90px_-45px_rgba(0,0,0,0.3)]">
-            <h3 className="text-2xl font-semibold">How it works</h3>
-            <ul className="mt-6 space-y-4 text-[#0f1f32]/85">
+          <div className="rounded-[24px] border border-white/30 bg-[#f1f8ff] text-[#0f1f32] p-5 shadow-[0_45px_90px_-45px_rgba(0,0,0,0.3)]">
+            <h3 className="text-lg font-semibold">How it works</h3>
+            <ul className="mt-3 space-y-2.5 text-[#0f1f32]/85">
               {howItWorks.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-[#FFD43B]" aria-hidden="true" />
-                  <span>{item}</span>
+                <li key={item} className="flex items-start gap-2.5">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[#FFD43B]" aria-hidden="true" />
+                  <span className="text-sm">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-2">
-          <div className="rounded-[32px] border border-white/30 bg-[#f1f8ff] text-[#0f1f32] p-8">
-            <h3 className="text-xl font-semibold">Who it&apos;s for</h3>
-            <ul className="mt-4 space-y-3 text-[#0f1f32]/85">
-              {whoFor.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-[#FFD43B]" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-[32px] border border-white/30 bg-[#f1f8ff] text-[#0f1f32] p-8">
-            <h3 className="text-xl font-semibold">What to expect</h3>
-            <ul className="mt-4 space-y-3 text-[#0f1f32]/85">
-              {expectations.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-[#FFD43B]" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-14 text-center">
+        <div className="mt-10 text-center">
           <a
             href="https://influencer.growripple.ai/signup/"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center justify-center rounded-full bg-white text-[#1ECAD3] px-12 py-4 text-lg font-semibold shadow-[0_30px_60px_-35px_rgba(0,0,0,0.4)] hover:translate-y-0.5 transition-transform"
           >
-            Try GrowRipple AI
+            Try GrowRipple
           </a>
         </div>
       </div>
